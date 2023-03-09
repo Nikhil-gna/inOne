@@ -6652,7 +6652,7 @@ button.bg-dark:focus {
 
 .mb-5,
 .my-5 {
-  margin-bottom: 3rem !important; }
+  margin-bottom: 20px !important; }
 
 .ml-5,
 .mx-5 {
@@ -8224,7 +8224,7 @@ h1, h2, h3, h4, h5,
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.9); }
+  color: rgb(0 0 0 / 90%); }
 
 .form-control {
   background: transparent;
