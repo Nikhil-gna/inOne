@@ -1,32 +1,33 @@
-<%- include('partials/header') %>
-    <%- include('partials/nav') %>
-    <h1>QR Code Scanner</h1>
-    <main>
-    <div id="reader"></div>
-    <div id="result"></div>
+<%- include('partials/header') %> <%- include('partials/nav') %>
+<h1>QR Code Scanner</h1>
+<main>
+  <div id="reader"></div>
+  <div id="result"></div>
 </main>
-    <!-- <video id="preview" class=""></video> -->
+<!-- <video id="preview" class=""></video> -->
 
+<script>
+  // console.log(Html5QrcodeScanner);
 
-    <script>
-        // console.log(Html5QrcodeScanner);
-        const scanner = new Html5QrcodeScanner('reader',{
-            fps: 20,
-            qrbox: {
-                width : 250,height:250,
-            }
-        });
-        scanner.render(success,error); 
+const scanner = new Html5QrcodeScanner("reader", {
+    fps: 20,
+    qrbox: {
+      width: 250,
+      height: 250,
+    },
+  });
+  scanner.render(success, error);
 
-        function success(result){
-          document.getElementById('result').innerHTML = 
-          `<h1>Success</h1>` + `<p> <a href="${result}">${result}</a> </p>`;
-          scanner.clear();
-          document.getElementById('reader').remove();
-        }
+  function success(result) {
+    document.getElementById("result").innerHTML =
+      `<h1>Success</h1>` + `<p> <a href="${result}">${result}</a> </p>`;
+    scanner.clear();
+    document.getElementById("reader").remove();
+  }
 
-        function error(err){
-           console.log(err);
-        }
-    </script>
- <%- include('partials/footer') %>
+  function error(err) {
+    console.log(err);
+  }
+   
+</script>
+<%- include('partials/footer') %>
