@@ -20,6 +20,10 @@ app.get("/home",function(req,res){
     res.render("home");
   });
 
+  app.get("/link",function(req,res){
+    res.render("link");
+  });
+
 app.get("/qrScan",function(req,res){
     res.render("qrScan");
   });
