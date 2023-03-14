@@ -1,3 +1,8 @@
+body{
+    text-align: center;
+    place-items: center;
+    align-items: center;
+}
 .form-container {
     position: relative;
     display: flex;
@@ -67,3 +72,34 @@
     }
   }
   
+/* qrccode buttons */
+button#html5-qrcode-button-camera-stop {
+    background-color: rgb(88, 101, 242);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+}
+button#html5-qrcode-button-camera-start{
+    background-color: rgb(88, 101, 242);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+}
+button#html5-qrcode-button-file-selection{
+    background-color: rgb(88, 101, 242);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+}
