@@ -1,71 +1,140 @@
 <%- include('partials/header') %> <%- include('partials/nav') %>
 
-    <button class="open-form">Add URL</button>
+    <button class="open-form" data-bs-toggle="modal" data-bs-target="#form-modal" style="margin-top: 100px;" >Add URL</button>
+    <!-- modal-bootstrap -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+      </button> -->
 
-   
-  
-<div class="form-container">
-  <div class="bottom-sheet">
-    
-    <div>
-        <div class="card border-success mb-3" style="max-width: 18rem">
-            <div class="card-header bg-transparent">
-              
-              <div>
-                Add
-                <button class="close-form"><i class="bx bx-x"></i></button>
-              </div>
-    <form>
-      <div class="form-floating mb-3">
-        <input
-          type="url"
-          class="form-control"
-          id="url"
-          placeholder="url"
-          style="border-radius: 30px"
-        />
-        <label for="url">URL</label>
-      </div>
-      <div class="form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          placeholder="title"
-          style="border-radius: 30px"
-        />
-        <label for="title">Title</label>
-      </div>
 
-      <br />
-      <div class="d-grid gap-2 col-6 mx-auto">
-        <button
-          style="border-radius: 20px"
-          class="btn btn-primary"
-          type="submit"
-        >
-          Save
-        </button>
+   <div class="modal fade" id="form-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Link</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-floating mb-3">
+                  <input
+                    type="url"
+                    class="form-control"
+                    id="url"
+                    placeholder="url"
+                    style="border-radius: 30px"
+                  />
+                  <label for="url">URL</label>
+                </div>
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    placeholder="title"
+                    style="border-radius: 30px"
+                  />
+                  <label for="title">Title</label>
+                </div>
+          
+                <br />
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <button
+                    style="border-radius: 20px"
+                    class="btn btn-primary"
+                    type="submit"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
+        </div>
+        
       </div>
-    </form>
+    </div>
   </div>
-</div>
-<!-- <div class="card-footer bg-transparent border-success">Footer</div> -->
-</div>
-</div>
+
+
+
+  <div class="form-container">
+    <div class="bottom-sheet">
+      <div>
+        <br />
+        <!-- <button type="button" class="btn-close" aria-label="Close"></button> -->
+       <button class="close-form"><i class="bx bx-x"></i></button>
+      </div>
+      
+      <div class="form-wrapper" >
+        <form>
+            <div class="form-floating mb-3">
+              <input
+                type="url"
+                class="form-control"
+                id="url"
+                placeholder="url"
+                style="border-radius: 30px"
+              />
+              <label for="url">URL</label>
+            </div>
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="title"
+                style="border-radius: 30px"
+              />
+              <label for="title">Title</label>
+            </div>
+      
+            <br />
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button
+                style="border-radius: 20px"
+                class="btn btn-primary"
+                type="submit"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+      
+    </div>
+  </div>
+  </div>
+   
+    
+  
+
 
 <script>
+    // import * as bootstrap from 'bootstrap';
+
+// const myModal = new bootstrap.Modal('#form-modal');
+// setTimeout(() => {
+// 	myModal.hide();
+// }, 3000);
+
+
   const openFormBtn = document.querySelector(".open-form");
   const closeFormBtn = document.querySelector(".close-form");
   const bottomSheet = document.querySelector(".bottom-sheet");
 
+
   openFormBtn.addEventListener("click", () => {
     bottomSheet.classList.add("active");
   });
-
   closeFormBtn.addEventListener("click", () => {
     bottomSheet.classList.remove("active");
   });
+  //display media 
+  var w = document.documentElement.clientWidth || window.innerWidth;
+  if (w <= 760) {
+// Probably mobile
+} else {
+// Probably desktop
+}
+
 
   // Submit form data here
   // ...

@@ -3,6 +3,9 @@ body{
     place-items: center;
     align-items: center;
 }
+.exampleModal{
+    display: none;
+}
 .form-container {
     position: relative;
     display: flex;
@@ -30,10 +33,12 @@ body{
     padding: 20px;
     transition: all 0.5s ease-in-out;
     transform: translateY(100%);
+    
   }
   
   .bottom-sheet.active {
     transform: translateY(0%);
+    
   }
   
   .form-container .close-form {
@@ -52,6 +57,7 @@ body{
   @media screen and (min-width: 768px) {
     .form-container {
       flex-direction: row;
+      display: none;
     }
     
     .bottom-sheet {
@@ -94,6 +100,16 @@ button#html5-qrcode-button-camera-start{
     display: inline-block;
 }
 button#html5-qrcode-button-file-selection{
+    background-color: rgb(88, 101, 242);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+}
+button#html5-qrcode-button-camera-permission{
     background-color: rgb(88, 101, 242);
     color: white;
     padding: 12px 20px;
