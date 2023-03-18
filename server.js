@@ -1,29 +1,23 @@
-
+const dotenv = require('dotenv');
 const express =require("express");
- require('dotenv').config();
 const mongoose = require("mongoose");
 // const links = require("./models/links");
-
-
-
+dotenv.config({ path: './.env' });
 
 const app = express();
-
 app.set("view engine","ejs");
 app.use(express.static("public"));
 
 //mongodb connection
-
-const DB = 'mongodb+srv://hashinone:inone%23007@cluster0.taw24jx.mongodb.net/hashinone?retryWrites=true&w=majority';
-
-mongoose.connect(DB,{
-  useNewUrlParser:true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-}).then(() => {
+const PORT = process.env.PORT;
+const DB = process.env.DATABASE;
+mongoose.connect(DB).then(() => {
   console.log("connection successful");
-}).catch((err) => console.log("no connection"));
+}).catch((err) => console.log("no connection"+err));
+
+const Links = require('./models/links');
+
+
 
 app.get("/",function(req,res)
 {
@@ -70,11 +64,11 @@ app.get("/contact",function(req,res){
 //         title: "Facebook"
 //       }
 
-    ]);
-  } catch (error) {
-    console.log(error);
-  }
-});
+//     ]);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 // app.get("/links",async(req,res) => {
      
@@ -97,6 +91,6 @@ app.get("/contact",function(req,res){
 
 
 
-app.listen(3000, function(){
-    console.log("Server running on port 3000:http://localhost:3000/");
+app.listen(PORT, function(){
+    console.log(`Server running on port 3000:http://localhost:${PORT}`);
 });

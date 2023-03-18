@@ -1,16 +1,18 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-//links schema(model)
-const linksSchema = new Schema({
+const linksSchema = new mongoose.Schema({
     link: {
         type: String,
-        required: true,
+        required: true
     },
     title: {
         type: String,
-        required: true,
-    },
+        required: true
+    }
 });
 
-module.exports = mongoose.model('links', linksSchema);
+const Links = mongoose.model('links', linksSchema);
+
+module.exports = Links;
+
+// module.exports = mongoose.model('links', linksSchema);
