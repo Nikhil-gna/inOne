@@ -16,13 +16,14 @@ app.use(express.static("public"));
 
 const DB = 'mongodb+srv://hashinone:inone%23007@cluster0.taw24jx.mongodb.net/hashinone?retryWrites=true&w=majority';
 
-mongoose.connect(DB).then(() => {
+mongoose.connect(DB,{
+  useNewUrlParser:true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+}).then(() => {
   console.log("connection successful");
 }).catch((err) => console.log("no connection"));
-
-
-
-
 
 app.get("/",function(req,res)
 {
