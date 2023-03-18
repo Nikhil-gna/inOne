@@ -78,6 +78,7 @@ app.get("/add",async(req,res) => {
       }
 
     ]);
+   res.send('data added');
   } catch (error) {
     console.log(error);
   }
