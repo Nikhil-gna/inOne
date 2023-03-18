@@ -70,12 +70,11 @@ app.get("/contact",function(req,res){
 //         title: "Facebook"
 //       }
 
-//     ]);
-//     res.send("Data added");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // app.get("/links",async(req,res) => {
      
