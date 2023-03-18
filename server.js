@@ -2,32 +2,24 @@
 const express =require("express");
  require('dotenv').config();
 const mongoose = require("mongoose");
-const links = require("./models/links");
+// const links = require("./models/links");
+
+
+
+
 const app = express();
+
 app.set("view engine","ejs");
 app.use(express.static("public"));
 
 //mongodb connection
 
-const PORT = process.env.PORT || 3000;
-mongoose.set('strictQuery', false);
+const DB = 'mongodb+srv://hashinone:inone%23007@cluster0.taw24jx.mongodb.net/hashinone?retryWrites=true&w=majority';
 
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  }
-  catch (err) {
-    console.error(err.message);
-    process.exit(1);
-  }
-};
+mongoose.connect(DB).then(() => {
+  console.log("connection successful");
+}).catch((err) => console.log("no connection"));
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running in mode on port ${PORT}`);
-  });
-});
 
 
 
@@ -65,36 +57,37 @@ app.get("/contact",function(req,res){
 });
 
 
-app.get("/add",async(req,res) => {
-  try {
-    await links.insertMany([
-      {
-        link: "https://www.google.com/",
-        title: "Google"
-      },
-      {
-        link: "https://www.facebook.com/",
-        title: "Facebook"
-      }
+// app.get("/add",async(req,res) => {
+//   try {
+//     await links.insertMany([
+//       {
+//         link: "https://www.google.com/",
+//         title: "Google"
+//       },
+//       {
+//         link: "https://www.facebook.com/",
+//         title: "Facebook"
+//       }
 
-    ]);
-  } catch (error) {
-    console.log(error);
-  }
-});
+//     ]);
+//     res.send("Data added");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
-app.get("/links",async(req,res) => {
+// app.get("/links",async(req,res) => {
      
-  const linksData = await links.find();
+//   const linksData = await links.find();
 
-  if(linksData){
-    res.send(linksData);
-  }else{
-    res.send("No data found");
-  }
+//   if(linksData){
+//     res.send(linksData);
+//   }else{
+//     res.send("No data found");
+//   }
   
   
-});
+// });
 
 
 
