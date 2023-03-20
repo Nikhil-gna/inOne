@@ -88,6 +88,7 @@ button#html5-qrcode-button-camera-stop {
     cursor: pointer;
     font-size: 16px;
     display: inline-block;
+    margin-bottom: 100px;
 }
 button#html5-qrcode-button-camera-start{
     background-color: rgb(88, 101, 242);

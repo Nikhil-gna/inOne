@@ -14,5 +14,3 @@ const linksSchema = new mongoose.Schema({
 const Links = mongoose.model('links', linksSchema);
 
 module.exports = Links;
-
-// module.exports = mongoose.model('links', linksSchema);

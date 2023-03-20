@@ -6,7 +6,7 @@
         Launch demo modal
       </button> -->
 
-
+<div class="bootstrap-div">
    <div class="modal fade" id="form-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -53,6 +53,7 @@
       </div>
     </div>
   </div>
+</div>
 
 
 
@@ -127,6 +128,10 @@
   closeFormBtn.addEventListener("click", () => {
     bottomSheet.classList.remove("active");
   });
+
+ var myModalEl = document.getElementById('form-modal');
+var modal = bootstrap.Modal.getInstance(myModalEl)
+modal.hide();
   //display media 
   var w = document.documentElement.clientWidth || window.innerWidth;
   if (w <= 760) {
@@ -136,7 +141,11 @@
 // Probably desktop
 
 }
+const myModal = new bootstrap.Modal('#form-modal');
 
+setTimeout(() => {
+    myModal.hide();
+}, 3000);
 
   // Submit form data here
   // ...
