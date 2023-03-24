@@ -1,21 +1,52 @@
 const dotenv = require('dotenv');
 const express =require("express");
-const mongoose = require("mongoose");
-// const links = require("./models/links");
+const bodyParser = require("body-parser");
+const admin = require("firebase-admin");
+var serviceAccount = require('./serviceAccountKey.json')
 dotenv.config({ path: './.env' });
+// const cookieParser = require('cookie-parser');
+const PORT = process.env.PORT;
+// const csrf = require('csurf');
+// const csrfMiddleWare = csrf({ cookie: true });
+
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://inone-f777c-default-rtdb.firebaseio.com"
+});
 
 const app = express();
 app.set("view engine","ejs");
+
 app.use(express.static("public"));
+app.use(bodyParser.json());
+// app.use(cookieParser());
+// app.use(csrfMiddleWare);
 
-//mongodb connection
-const PORT = process.env.PORT;
-const DB = process.env.DATABASE;
-mongoose.connect(DB).then(() => {
-  console.log("connection successful");
-}).catch((err) => console.log("no connection"+err));
 
-const Links = require('./models/links');
+// app.all("*", (req, res, next) => {
+//   res.cookie("XSRF-TOKEN", req.csrfToken);
+// });
+
+// app.post("/login", (req, res) => {
+//   const idToken = req.body.idToken.toString();
+//   const expiresIn = 60 * 60 * 24 * 5 * 1000;
+//   admin.getAuth()
+//     .createSessionCookie(idToken, { expiresIn })
+//     .then(
+//       (sessionCookie) => {
+//         const options = { maxAge: expiresIn, httpOnly: true, secure: true };
+//         res.cookie("session", sessionCookie, options);
+//         res.end(JSON.stringify({ status: "success" }));
+//       },
+//       (error) => {
+//         res.status(401).send("UNAUTHORIZED REQUEST!");
+//         res.redirect("/login");
+//       }
+//     )
+// });
+
+
 
 
 
@@ -31,7 +62,15 @@ app.get("/login",function(req,res)
 
 
 app.get("/home",function(req,res){
-  res.render("home");
+  // const sessionCookie = req.cookies.session || "";
+  // admin.auth().verifySessionCookie(sessionCookie, true /** checkRevoked */)
+  //   .then(() => {
+      res.render("home");
+    // })
+    // .catch((error) => {
+    //   res.redirect("/login");
+    //   console.log(error);
+    // });
 });
 
 
@@ -82,11 +121,6 @@ app.get("/contact",function(req,res){
   
   
 // });
-
-
-
-
-
 
 
 

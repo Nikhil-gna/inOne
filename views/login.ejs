@@ -1,95 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  	<title>inOne</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>inOne</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-	
-	<link rel="stylesheet" href="assets/css/style.css">
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
 
-	</head>
-	<body >
-     
-	<section class="ftco-section" style="padding-top:10px ;">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5" style="margin-bottom: 20px;">
-          <img class="logo" src="../assets/images/logo.png" alt="#inOne logo">
-					 <h1 class="heading-section">i n O n e</h1> 
-				</div>
-			</div> 
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-4">
-					<div class="login -wrap p-0">
-            
-		      	 <h4 class="mb-4 text-center">Enter Your Details</h4>
-		      	<form action="/home" class="signin-form">
-		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="User Name "color="" autofocus required>
-		      		</div>
-	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
-	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-	            </div>
-	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary submit px-3">Login in</button>
-	            </div>
-				<div class="form-group d-md-flex">
-	            	<div class="w-50">
-		            	<label class="checkbox-wrap checkbox-primary">Remember Me
-									  <input type="checkbox" checked>
-									  <span class="checkmark"></span>
-									</label>
-									
-									<!-- <div class="w-50 text-md-right">
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <main>
+      <section class="ftco-section" style="padding-top: 10px">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5" style="margin-bottom: 20px">
+              <img
+                class="logo"
+                src="../assets/images/logo.png"
+                alt="#inOne logo"
+              />
+              <h1 class="heading-section">i n O n e</h1>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+              <div class="login -wrap p-0">
+                <h4 class="mb-4 text-center">Enter Your Details</h4>
+                <form class="signin-form">
+                  <div class="form-group">
+                    <input
+                      id="email"
+                      type="email"
+                      class="form-control"
+                      placeholder="Email "
+                      color=""
+                      autofocus
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      id="password-field"
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
+                      required
+                    />
+                    <span
+                      toggle="#password-field"
+                      class="fa fa-fw fa-eye field-icon toggle-password"
+                    ></span>
+                  </div>
+                  <div class="form-group">
+                    <button
+                      id="signup"
+                      type="submit"
+                      class="form-control btn btn-primary submit px-3"
+                    >
+                      Sign Up
+                    </button>
+                  </div>
+                  <div class="form-group d-md-flex">
+                    <div class="w-50">
+                      <label class="checkbox-wrap checkbox-primary"
+                        >Remember Me
+                        <input type="checkbox" checked />
+                        <span class="checkmark"></span>
+                      </label>
+
+                      <!-- <div class="w-50 text-md-right">
 										<a href="#" style="color: #fff">Forgot Password</a>
 									</div> -->
-				</div>
-				</div>
-				<button class="google-btn form-control btn btn-primary submit px-3">
-					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google logo" width="20" height="20">
-					Sign in with Google
-				  </button>
-				  
-	            
-								
-				<!-- <button class="form-control btn btn-primary submit px-3">singin with google</button> -->
-				<!-- <button style="background: url('../assets/images/google-logo.png') no-repeat;  border: none;" class="form-control btn btn-primary submit px-3">signin with Google</button> -->
-				<style>
-					.google-btn {
-					  display: flex;
-					  align-items: center;
-					  justify-content: center;
-					  background-color: #000000;
-					  color: #fff;
-					  font-weight: bold;
-					  border-radius: 40px;
-					  cursor: pointer;
-					}
-				  
-					.google-btn img {
-					  margin-right: 10px;
-					}
-				  </style>
-				  
-				 
-	          </form>
+                    </div>
+                  </div>
+                  <button
+                    class="google-btn form-control btn btn-primary submit px-3"
+                    id="googleid"
+                  >
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+                      alt="Google logo"
+                      width="20"
+                      height="20"
+                    />
+                    Sign in with Google
+                  </button>
 
-		            </div>
-				</div>
-			</div>
-		</div>
+                  <!-- <button class="form-control btn btn-primary submit px-3">singin with google</button> -->
+                  <!-- <button style="background: url('../assets/images/google-logo.png') no-repeat;  border: none;" class="form-control btn btn-primary submit px-3">signin with Google</button> -->
+                  <style>
+                    .google-btn {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      background-color: #000000;
+                      color: #fff;
+                      font-weight: bold;
+                      border-radius: 40px;
+                      cursor: pointer;
+                    }
 
-	</section>
+                    .google-btn img {
+                      margin-right: 10px;
+                    }
+                  </style>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/popper.js"></script>
-  <script src="/assets/js/bootstrap.min.js"></script>
-  <script src="/assets/js/main.js"></script>
-	</body>
+      <script src="/assets/js/jquery.min.js"></script>
+      <script src="/assets/js/popper.js"></script>
+      <script src="/assets/js/bootstrap.min.js"></script>
+      <script src="/assets/js/main.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+      <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+        import {
+          getAuth,
+          signOut,
+          setPersistence,
+          GoogleAuthProvider,
+          signInWithRedirect,
+          getRedirectResult,
+          browserLocalPersistence,
+          browserSessionPersistence,
+          inMemoryPersistence,
+          createUserWithEmailAndPassword,
+        } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
+          authDomain: "inone-f777c.firebaseapp.com",
+          projectId: "inone-f777c",
+          storageBucket: "inone-f777c.appspot.com",
+          messagingSenderId: "962218536288",
+          appId: "1:962218536288:web:12afbd0367a18f097a4205",
+          measurementId: "G-Q1QYMJZH0E",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        await setPersistence(auth, browserLocalPersistence);
+
+        document
+          .getElementById("signup")
+          .addEventListener("click", function (event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password-field").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+              .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                // ...
+                return (
+                  user
+                    .getIdToken()
+                    .then((idToken) => {
+                      return fetch("/sessionLogin", {
+                        method: "POST",
+                        headers: {
+                          Accept: "application/json",
+                          "Content-Type": "application/json",
+                          "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                        },
+                        body: JSON.stringify({
+                          idToken: idToken,
+                        }),
+                      });
+                    })
+                    //   .then(() => {
+                    //     return signOut(auth).then(() => {
+                    //       // Sign-out successful.
+                    // 	  alert("Sign-out successful.");
+                    //     })
+                    // })
+                    .then(() => {
+                      window.location.assign("/home");
+                    })
+                );
+
+                alert("user creazted successfully");
+                console.log(user);
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+                alert(errorMessage);
+                console.log(error);
+              });
+          });
+
+        const provider = new GoogleAuthProvider();
+        // signInWithRedirect(auth, provider);
+        // google -
+        //   btn.addEventListener("click", (e) => {
+        //     e.preventDefault();
+        //     getRedirectResult(auth)
+        //       .then((result) => {
+        //         // This gives you a Google Access Token. You can use it to access Google APIs.
+        //         const credential =
+        //           GoogleAuthProvider.credentialFromResult(result);
+        //         const token = credential.accessToken;
+
+        //         // The signed-in user info.
+        //         const user = result.user;
+        //         console.log(user);
+        //         console.log("user created successfully");
+        //         // IdP data available using getAdditionalUserInfo(result)
+        //         // ...
+        //       })
+        //       .catch((error) => {
+        //         // Handle Errors here.
+        //         const errorCode = error.code;
+        //         const errorMessage = error.message;
+        //         // The email of the user's account used.
+        //         const email = error.customData.email;
+        //         // The AuthCredential type that was used.
+        //         const credential =
+        //           GoogleAuthProvider.credentialFromError(error);
+        //         console.log(error);
+        //         // ...
+        //       });
+        //   });
+
+        auth.onAuthStateChanged(function (user) {
+          if (user) {
+            // User is signed in, redirect to home page
+            // window.location.href = "/home";
+            console.log(user);
+          } else {
+            // User is signed out
+            window.location.href = "/";
+            console.log("user is signed out");
+          }
+        });
+      </script>
+    </main>
+  </body>
 </html>

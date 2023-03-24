@@ -1,3 +1,7 @@
 node_modules
 .env
 .prettierrc
+.vscode
+.firebaserc
+serviceAccountKey.json
+firebase.js
