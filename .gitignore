@@ -4,4 +4,3 @@ node_modules
 .vscode
 .firebaserc
 serviceAccountKey.json
-firebase.js

@@ -1,5 +1,12 @@
 <%- include('partials/header') %>
 <%- include('partials/nav') %>
     <h1>profile</h1>
-    <a href="/login"><button class="open-form"  style="margin-top: 100px;" >Log out</button></a>
+    <button id="logout" class="open-form"  style="margin-top: 100px;" >Log out</button>
+    <script>
+        // document.getElementById("logout").addEventListener("click", function(){
+        //     // localStorage.removeItem("token");
+        //     // window.location.href = "/";
+        //     alert("You have been logged out")
+        // })
+    </script>
 <%- include('partials/footer') %>

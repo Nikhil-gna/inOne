@@ -27,4 +27,11 @@
 
 })
 (jQuery);
- 
+
+// const butt = document.getElementById("logout");
+
+// document.getElementById("logout").addEventListener("click", function(){
+// 	// localStorage.removeItem("token");
+// 	// window.location.href = "/";
+// 	alert("You have been logged out")
+// })
