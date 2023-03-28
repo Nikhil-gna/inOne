@@ -35,3 +35,21 @@
 // 	// window.location.href = "/";
 // 	alert("You have been logged out")
 // })
+
+// const butt = document.querySelector("#logout");
+
+// butt.addEventListener("click", function(){
+// 	// localStorage.removeItem("token");
+// 	// window.location.href = "/";
+// 	alert("You have been logged out")
+// });
+
+// googleid.addEventListener("click", (e) => {
+// 	alert("You have been logged out")
+// });
+
+// document.getElementById("logout").addEventListener("click", function(){
+//     // localStorage.removeItem("token");
+//     // window.location.href = "/";
+//     alert("logged out")
+// })

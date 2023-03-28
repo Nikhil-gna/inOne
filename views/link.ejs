@@ -1,5 +1,5 @@
 <%- include('partials/header') %> <%- include('partials/nav') %>
-
+<body id="link">
     <button class="open-form" data-bs-toggle="modal" data-bs-target="#form-modal" style="margin-top: 100px;" >Add URL</button>
     <!-- modal-bootstrap -->
     <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -129,9 +129,9 @@
     bottomSheet.classList.remove("active");
   });
 
- var myModalEl = document.getElementById('form-modal');
-var modal = bootstrap.Modal.getInstance(myModalEl)
-modal.hide();
+//  var myModalEl = document.getElementById('form-modal');
+// var modal = bootstrap.Modal.getInstance(myModalEl)
+// modal.hide();
   //display media 
   var w = document.documentElement.clientWidth || window.innerWidth;
   if (w <= 760) {
@@ -141,7 +141,7 @@ modal.hide();
 // Probably desktop
 
 }
-const myModal = new bootstrap.Modal('#form-modal');
+// const myModal = new bootstrap.Modal('#form-modal');
 
 setTimeout(() => {
     myModal.hide();
