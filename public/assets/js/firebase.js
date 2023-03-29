@@ -12,6 +12,7 @@ import {
   inMemoryPersistence,
   createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+import { getDatabase,set,get,ref,child } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
@@ -25,6 +26,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 const provider = new GoogleAuthProvider(app);
 // const database = getDatabase(app);
 const auth = getAuth(app);
@@ -49,6 +51,7 @@ switch (page) {
           // Signed in
           const user = userCredential.user;
           // ...
+          console.log(user);
           window.location.assign("/home");
           return user.getIdToken().then((idToken) => {
             return fetch("/sessionLogin", {
@@ -97,6 +100,9 @@ switch (page) {
 
           // The signed-in user info.
           const user = result.user;
+
+         
+
 
           //redirect to /home
           // IdP data available using getAdditionalUserInfo(result)
@@ -167,6 +173,8 @@ switch (page) {
 
 
 const user = auth.currentUser;
+
+
 if (user !== null) {
   user.providerData.forEach((profile) => {
     console.log("Sign-in provider: " + profile.providerId);
@@ -174,5 +182,41 @@ if (user !== null) {
     console.log("  Name: " + profile.displayName);
     console.log("  Email: " + profile.email);
     console.log("  Photo URL: " + profile.photoURL);
+     
+    set(ref(database,'users/'+ user.uid),{
+      username: profile.displayName,
+      email : profile.email,
+      photoURL : profile.photoURL
+    })
   });
 }
+
+
+  // const displayName = user.displayName;
+  // const email = user.email;
+  // const photoURL = user.photoURL;
+  // const emailVerified = user.emailVerified;
+
+
+  // var firbaseRef = ref(database,'users/'+ user.uid);
+
+  // firbaseRef.once('value', function(snapshot) {
+  //   console.log(snapshot.val());
+  //   // document.getElementById("name").innerHTML = snapshot.val().username;
+  //   // document.getElementById("email").innerHTML = snapshot.val().email;
+  //   // document.getElementById("profilepic").src = snapshot.val().photoURL;
+  // });
+  
+  const dbRef = ref(getDatabase());
+get(child(dbRef,'users/'+ user.uid )).then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+    document.getElementById("dpName").innerHTML = snapshot.val().username;
+    document.getElementById("profilepic").src = snapshot.val().photoURL;
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+  
