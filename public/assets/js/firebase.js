@@ -7,18 +7,13 @@ import {
   GoogleAuthProvider,
   signInWithRedirect,
   getRedirectResult,
+  onAuthStateChanged ,
   browserLocalPersistence,
   browserSessionPersistence,
   inMemoryPersistence,
   createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
-import {
-  getDatabase,
-  set,
-  get,
-  ref,
-  child,
-} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+import { getDatabase,set,get,ref,child } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
@@ -36,8 +31,7 @@ const database = getDatabase(app);
 const provider = new GoogleAuthProvider(app);
 // const database = getDatabase(app);
 const auth = getAuth(app);
-await setPersistence(auth, inMemoryPersistence);
-// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+await setPersistence(auth, browserLocalPersistence);
 
 // ####################################### add function based on page ###############################################################
 
@@ -91,43 +85,30 @@ switch (page) {
           console.log(error);
         });
     });
-    //google auth
     const googlebtn = document.getElementById("googleid");
     googlebtn.addEventListener("click", (e) => {
       e.preventDefault();
       signInWithRedirect(auth, provider);
-
+            
+          
       getRedirectResult(auth)
         .then((result) => {
           // This gives you a Google Access Token. You can use it to access Google APIs.
           const credential = GoogleAuthProvider.credentialFromResult(result);
+          // window.location.assign("/home");
+          // console.log(user);
           const token = credential.accessToken;
+
           // The signed-in user info.
           const user = result.user;
-          return result.getIdToken().then((idToken) => {
-            return fetch("/sessionLogin", {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-              },
-              body: JSON.stringify({ idToken }),
-            });
-          });
-        })
-        .then(() => {
-          window.location.assign("/home");
-          
-        })
-        .then(() => {
-          return signOut(auth).then(() => {
-            // Sign-out successful.
-            alert("Sign-out successful.");
-          });
-          
-        })
 
+         
+
+
+          //redirect to /home
+          // IdP data available using getAdditionalUserInfo(result)
+          // ...
+        })
         .catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;
@@ -174,6 +155,21 @@ switch (page) {
     break;
 }
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    // window.location.assign("/home");
+    const uid = user.uid;
+    console.log(uid);
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
+
+
 // updateProfile(auth.currentUser, {
 //   displayName: "hash InOne",
 // })
@@ -188,7 +184,10 @@ switch (page) {
 //     // ...
 //   });
 
+
+
 const user = auth.currentUser;
+
 
 if (user !== null) {
   user.providerData.forEach((profile) => {
@@ -197,41 +196,41 @@ if (user !== null) {
     console.log("  Name: " + profile.displayName);
     console.log("  Email: " + profile.email);
     console.log("  Photo URL: " + profile.photoURL);
-
-    set(ref(database, "users/" + user.uid), {
+     
+    set(ref(database,'users/'+ user.uid),{
       username: profile.displayName,
-      email: profile.email,
-      photoURL: profile.photoURL,
-    });
+      email : profile.email,
+      photoURL : profile.photoURL
+    })
   });
 }
 
-// const displayName = user.displayName;
-// const email = user.email;
-// const photoURL = user.photoURL;
-// const emailVerified = user.emailVerified;
 
-// var firbaseRef = ref(database,'users/'+ user.uid);
+  // const displayName = user.displayName;
+  // const email = user.email;
+  // const photoURL = user.photoURL;
+  // const emailVerified = user.emailVerified;
 
-// firbaseRef.once('value', function(snapshot) {
-//   console.log(snapshot.val());
-//   // document.getElementById("name").innerHTML = snapshot.val().username;
-//   // document.getElementById("email").innerHTML = snapshot.val().email;
-//   // document.getElementById("profilepic").src = snapshot.val().photoURL;
-// });
 
-const uid = user.uid;
-const dbRef = ref(getDatabase());
-get(child(dbRef, "users/" + user.uid))
-  .then((snapshot) => {
-    if (snapshot.exists()) {
-      console.log(snapshot.val());
-      document.getElementById("dpName").innerHTML = snapshot.val().username;
-      document.getElementById("profilepic").src = snapshot.val().photoURL;
-    } else {
-      console.log("No data available");
-    }
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+  // var firbaseRef = ref(database,'users/'+ user.uid);
+
+  // firbaseRef.once('value', function(snapshot) {
+  //   console.log(snapshot.val());
+  //   // document.getElementById("name").innerHTML = snapshot.val().username;
+  //   // document.getElementById("email").innerHTML = snapshot.val().email;
+  //   // document.getElementById("profilepic").src = snapshot.val().photoURL;
+  // });
+  
+  const dbRef = ref(getDatabase());
+get(child(dbRef,'users/'+ user.uid )).then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+    document.getElementById("dpName").innerHTML = snapshot.val().username;
+    document.getElementById("profilepic").src = snapshot.val().photoURL;
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+  
