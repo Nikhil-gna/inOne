@@ -14,6 +14,7 @@ import {
   createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
 import { getDatabase,set,get,ref,child } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+import { getFirestore,collection,setDoc,getDoc,doc,addDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
@@ -92,8 +93,10 @@ switch (page) {
             
           
       getRedirectResult(auth)
+      
         .then((result) => {
           // This gives you a Google Access Token. You can use it to access Google APIs.
+          // window.location.assign("/home");
           const credential = GoogleAuthProvider.credentialFromResult(result);
           // window.location.assign("/home");
           // console.log(user);
@@ -101,10 +104,7 @@ switch (page) {
 
           // The signed-in user info.
           const user = result.user;
-
          
-
-
           //redirect to /home
           // IdP data available using getAdditionalUserInfo(result)
           // ...
@@ -120,10 +120,14 @@ switch (page) {
           alert(errorMessage);
           // ...
         });
+        
     });
+    
     break;
   case "home":
     console.log("home");
+    
+    
     break;
   case "link":
     console.log("link");
@@ -134,8 +138,11 @@ switch (page) {
   case "profile":
     console.log("profile");
     const logout = document.getElementById("logout");
+    
     logout.addEventListener("click", function () {
+  
       // localStorage.removeItem("token");
+      if(confirm("Are you sure you want to logout?")){
       window.location.href = "/login";
       signOut(auth)
         .then(() => {
@@ -146,8 +153,10 @@ switch (page) {
         });
 
       alert("logged out");
+    }
     });
-
+ 
+  
     break;
 
   default:
@@ -197,14 +206,24 @@ if (user !== null) {
     console.log("  Email: " + profile.email);
     console.log("  Photo URL: " + profile.photoURL);
      
-    set(ref(database,'users/'+ user.uid),{
+    set(ref(database,'users/'+ user.uid+'/details'),{
       username: profile.displayName,
       email : profile.email,
       photoURL : profile.photoURL
     })
+   
+    
   });
 }
-
+   
+    // const linkData = {
+    //   link: link,
+    //   title: title
+    // };
+    // database.ref('links').push(linkData);
+    
+    // database.ref('links').push(linkData);
+    
 
   // const displayName = user.displayName;
   // const email = user.email;
@@ -222,7 +241,7 @@ if (user !== null) {
   // });
   
   const dbRef = ref(getDatabase());
-get(child(dbRef,'users/'+ user.uid )).then((snapshot) => {
+get(child(dbRef,'users/'+ user.uid+'/details' )).then((snapshot) => {
   if (snapshot.exists()) {
     console.log(snapshot.val());
     document.getElementById("dpName").innerHTML = snapshot.val().username;
@@ -233,4 +252,50 @@ get(child(dbRef,'users/'+ user.uid )).then((snapshot) => {
 }).catch((error) => {
   console.error(error);
 });
+
+
+const link = document.getElementById("url-input");
+const title = document.getElementById("title-input");
+set(ref(database,'users/'+ user.uid+'/links'),{
+  title: "title",
+  url: "link"
+})
   
+//firestore
+
+
+const db = getFirestore(app);
+
+const details ={
+  userID:user.uid,
+  Name: user.displayName,
+  Email: user.email,
+  PhotoURL:user.photoURL
+}
+const links =[{
+  title: "title",
+  url: "linkzzz"
+}]
+console.log(details);
+
+const docRef = doc(db, "users", user.uid);
+// const docRef = doc(firestoreDb, "users", user.uid);
+
+
+await setDoc(doc(db, "users",user.uid ), {
+  details: details,
+  links: links
+});
+
+
+getDoc(docRef).then((doc) => {
+  if (doc.exists()) {
+    console.log("Document data:", doc.data());
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}).catch((error) => {
+  console.log("Error getting document:", error);
+});
+/////////////////////////////////////////////////////////////////////////
