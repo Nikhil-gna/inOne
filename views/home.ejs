@@ -86,13 +86,13 @@ form.addEventListener("submit", function (event) {
   // render the updated items
   // renderItems();
   const container = document.getElementById("items");
-
-items.forEach((link) => {
+  items.forEach((link) => {
   const a = document.createElement("a");
   a.href = link.url;
   a.innerText = link.title;
   container.appendChild(a);
 });
+
 });   
 
 
