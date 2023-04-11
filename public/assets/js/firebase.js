@@ -26,6 +26,7 @@ import {
   setDoc,
   getDoc,
   doc,
+  updateDoc, arrayUnion, arrayRemove,
   addDoc,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 
@@ -136,6 +137,21 @@ switch (page) {
     break;
   case "home":
     console.log("home");
+    const user = auth.currentUser;
+    const dbRef = ref(getDatabase());
+get(child(dbRef, "users/" + user.uid + "/details"))
+  .then((snapshot) => {
+    if (snapshot.exists()) {
+      document.getElementById("name").innerHTML = snapshot.val().username;
+      document.getElementById("Photo").src = snapshot.val().photoURL;
+    } else {
+      console.log("No data available");
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
 
     break;
   case "link":
@@ -241,7 +257,7 @@ set(ref(database, "users/" + user.uid + "/links"), {
 
 
 
-//######################################################firestore###############################################
+//###################################################### firestore ###############################################
 
 //database init
 const db = getFirestore(app);
@@ -275,16 +291,35 @@ const details = {
 
 
 async function addData( link, title) {
+
   const links = [
     {
-      title:title ,
-      url: link,
+      title:"title" ,
+      url: "link",
     },
+    
   ];
+  // links.push({ url: link, title: title });
+  console.log(links);
+
+  
   await setDoc(doc(db, "users", user.uid), {
     details: details,
     links: links
   });
+
+  await updateDoc(doc(db, "users", user.uid), {
+    links: arrayUnion({ url: link, title: title })
+  });
+
+  const largerArray = snapshot.get('links');
+  largerArray.push('newfield');
+  await updateDoc(doc(db, "users", user.uid), {
+    links: arrayUnion(largerArray)
+});
+
+
+  
 }
 
 // console.log(details);

@@ -120,3 +120,112 @@ button#html5-qrcode-button-camera-permission{
     font-size: 16px;
     display: inline-block;
 }
+/* ################################################home page################################################ */
+/* Style Settings */
+
+@import url('https://fonts.googleapis.com/css?family=Product%20Sans:400,700&display=swap');
+:root {
+    --font: 'Prodcut Sans', 'Product Sans', sans-serif;
+}
+
+#home {
+    background: linear-gradient(30deg, #afaee7,#ba9fca, #a2d3da, #91d4cb);
+	background-size: 450% 450%;
+	animation: gradient 10s ease infinite; 
+}
+.links-div{
+  margin-top: 78px;
+}
+
+a{
+    border-radius: 30px;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.theme-light {
+    --color-main: #fff;
+    --color-text: #fff;
+ }
+
+
+.Photo {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 8px auto 13px;
+    border-radius: 50%;
+}
+
+.bio {
+    color: #000000;
+    font-size: 17px;
+    font-weight: 1000;
+    padding-top: 10px;
+    display: block;
+    /* font-family: 'Product Sans'; */
+    width: 100%;
+    text-align: center;
+}
+
+#title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+    display: block;
+    font-family: var(--font);
+    width: 100%;
+    margin-top: 50px;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+
+#linksbutton {
+    max-width: 580px;
+    width: auto;
+    display: block;
+    margin: 27px auto;
+}
+
+.links {
+    display: block;
+        background-color:
+        #5865f2;
+    color: var(--color-text);
+    font-family: var(--font);
+    text-align: center;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 17px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all .25s cubic-bezier(.08, .59, .29, .99);
+    border: solid var(--color-main) 2px;
+}
+
+.links:hover {
+    background-color: #fff;
+    color: #000;
+    border: solid var(--color-main) 2px;
+}
+
+
+
+
+

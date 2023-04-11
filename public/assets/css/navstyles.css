@@ -171,7 +171,8 @@ img {
 /*Active link*/
 .active-link {
   position: relative;
-  color: hsl(235deg 86% 65%);
+  color: 
+  #404eed;
   transition: .3s;
 }
 
