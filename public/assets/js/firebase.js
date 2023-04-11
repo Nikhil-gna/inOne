@@ -312,12 +312,7 @@ async function addData( link, title) {
     links: arrayUnion({ url: link, title: title })
   });
 
-  const largerArray = snapshot.get('links');
-  largerArray.push('newfield');
-  await updateDoc(doc(db, "users", user.uid), {
-    links: arrayUnion(largerArray)
-});
-
+ 
 
   
 }
