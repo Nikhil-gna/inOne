@@ -51,7 +51,7 @@ await setPersistence(auth, browserLocalPersistence);
 // ####################################### add function based on page ###############################################################
 
 const page = document.body.id;
-
+const user = auth.currentUser;
 switch (page) {
   case "login":
     console.log("login");
@@ -107,6 +107,8 @@ switch (page) {
 
       getRedirectResult(auth)
         .then((result) => {
+          
+          // window.location.assign("/home");
           // This gives you a Google Access Token. You can use it to access Google APIs.
           // window.location.assign("/home");
           const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -121,6 +123,7 @@ switch (page) {
           // IdP data available using getAdditionalUserInfo(result)
           // ...
         })
+      
         .catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;
@@ -132,12 +135,24 @@ switch (page) {
           alert(errorMessage);
           // ...
         });
+       
+       
+    });
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.assign("/home");
+       } 
     });
 
     break;
   case "home":
     console.log("home");
-    const user = auth.currentUser;
+    
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.assign("/login");
+       } 
+    });
     const dbRef = ref(getDatabase());
 get(child(dbRef, "users/" + user.uid + "/details"))
   .then((snapshot) => {
@@ -156,12 +171,22 @@ get(child(dbRef, "users/" + user.uid + "/details"))
     break;
   case "link":
     console.log("link");
+    
+    if (!user) {
+      window.location.assign("/login");
+     } 
     break;
   case "qrscan":
     console.log("qrscan");
+    if (!user) {
+      window.location.assign("/login");
+     } 
     break;
   case "profile":
     console.log("profile");
+    if (!user) {
+      window.location.assign("/login");
+     } 
     const logout = document.getElementById("logout");
 
     logout.addEventListener("click", function () {
@@ -187,19 +212,11 @@ get(child(dbRef, "users/" + user.uid + "/details"))
     break;
 }
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    // window.location.assign("/home");
-    const uid = user.uid;
-    console.log(uid);
-    // ...
-  } else {
-    // User is signed out
-    // ...
-  }
-});
+// onAuthStateChanged(auth, (user) => {
+//   if (!user) {
+//    } else {
+//    }
+// });
 
 // updateProfile(auth.currentUser, {
 //   displayName: "hash InOne",
@@ -215,7 +232,7 @@ onAuthStateChanged(auth, (user) => {
 //     // ...
 //   });
 
-const user = auth.currentUser;
+// const user = auth.currentUser;
 
 if (user !== null) {
   user.providerData.forEach((profile) => {
