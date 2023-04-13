@@ -340,16 +340,31 @@ const docRef = doc(db, "users", user.uid);
 
 
 
-//get data
+// get data
 getDoc(docRef)
   .then((doc) => {
     if (doc.exists()) {
-      console.log("Document data:", doc.data());
+      // console.log("Document data:", doc.data().links[1]);
+      const newdata = [];
+      newdata.push(doc.data().links[1].url);
+      
+      console.log(doc.data().links[1].url);
+      // document.getElementById("dynamic").innerHTML = "";
+      // document.getElementById("dynamic").href = doc.data().links[1].url;
+      document.getElementById("dynamic").setAttribute("href", doc.data().links[1].url);
+      document.getElementById("dynamic").innerHTML = doc.data().links[1].title;
+      // const data = doc.data().links;
+      // data.forEach((element) => {
+      //   console.log(element.title);
+      //   console.log(element.url);
+      // });
+      
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   })
   .catch((error) => {
-    console.log("Error getting document:", error);
+    console.log("Error getting document:", error.message);
   });
+  

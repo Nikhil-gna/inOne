@@ -17,6 +17,7 @@
 		<a class="links" href="https://www.facebook.com/" > Facebook </a>
 		<a class="links" href="https://www.snapchat.com/" > Snapchat</a>
     <a class="links" href="https://www.instagram.com/" >Instagram</a>
+    <a class="links" id ="dynamic" href="" ></a>
     
     </div>
   </div>
@@ -36,10 +37,10 @@
 
 <form>
     <label for="url-input">URL:</label>
-    <input type="text" id="url-input" name="url-input" />
+    <input type="url" id="url-input" name="url-input" required />
     <br>
     <label for="title-input">Title:</label>
-    <input type="text" id="title-input" name="title-input" />
+    <input type="text" id="title-input" name="title-input" required />
     <br>
     <button type="submit" >Add Item</button>
   </form>
@@ -110,11 +111,12 @@ form.addEventListener("submit", function (event) {
 
   // render the updated items
   // renderItems();
-  const container = document.getElementById("items");
+  const container = document.getElementById("linksbutton");
   items.forEach((link) => {
   const a = document.createElement("a");
   a.href = link.url;
   a.innerText = link.title;
+  // $('#linksbutton a').addClass('links');
   container.appendChild(a);
 });
 
