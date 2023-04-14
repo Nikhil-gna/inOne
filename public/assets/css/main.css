@@ -29,9 +29,11 @@ body{
     bottom: 55px;
     left: 0;
     right: 0;
-    background-color: #f2f2f2;
+    background-color:#dbd8e6a6;
     padding: 20px;
-    transition: all 0.5s ease-in-out;
+    border-radius: 20px;
+
+   transition: all 0.5s ease-in-out;
     transform: translateY(100%);
     
   }

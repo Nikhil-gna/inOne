@@ -25,6 +25,7 @@ import {
   collection,
   setDoc,
   getDoc,
+  getDocs,
   doc,
   updateDoc, arrayUnion, arrayRemove,
   addDoc,
@@ -299,47 +300,60 @@ const details = {
   Email: user.email,
   PhotoURL: user.photoURL,
 };
-// const links = [
-//   {
-//     title:"title" ,
-//     url: "link",
-//   },
-// ];
+const links = 
+  {
+    title:"title" ,
+    url: "link",
+  }
 
+//set data detials
+const colref = collection(db, "users", user.uid,"details");
+const docref = doc(colref, "details");
+setDoc(docref, details)
 
-async function addData( link, title) {
-
-  const links = [
-    {
-      title:"title" ,
-      url: "link",
-    },
-    
-  ];
-  // links.push({ url: link, title: title });
-  console.log(links);
-
-  
-  await setDoc(doc(db, "users", user.uid), {
-    details: details,
-    links: links
+  .then(() => {
+    console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+    console.error("Error adding document: ", error);
   });
 
-  await updateDoc(doc(db, "users", user.uid), {
-    links: arrayUnion({ url: link, title: title })
+ //set data links
+  const linkcol = collection(db, "users", user.uid,"links");
+  const linkdoc = doc(linkcol);
+  setDoc(linkdoc, links)
+
+  getDocs(linkcol)
+  .then((snapshot) => {
+    let link = [];
+    snapshot.docs.forEach((doc) => {
+      link.push({...doc.data(),id:doc.id});
+    });
+    console.log(link);
+   
+  })
+  .catch((error) => {
+    console.log("Error getting documents: ", error);
   });
 
  
 
+getDoc(docref)
+  .then((doc) => {
+    if (doc.exists()) {
+      console.log("Document data:", doc.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  })
+  .catch((error) => {
+    console.log("Error getting document:", error.message);
+  });
+
   
-}
 
-// console.log(details);
-//set data
 const docRef = doc(db, "users", user.uid);
-
-
-
 // get data
 getDoc(docRef)
   .then((doc) => {
@@ -353,11 +367,7 @@ getDoc(docRef)
       // document.getElementById("dynamic").href = doc.data().links[1].url;
       document.getElementById("dynamic").setAttribute("href", doc.data().links[1].url);
       document.getElementById("dynamic").innerHTML = doc.data().links[1].title;
-      // const data = doc.data().links;
-      // data.forEach((element) => {
-      //   console.log(element.title);
-      //   console.log(element.url);
-      // });
+     
       
     } else {
       // doc.data() will be undefined in this case
