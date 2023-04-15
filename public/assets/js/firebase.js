@@ -27,6 +27,8 @@ import {
   getDoc,
   getDocs,
   doc,
+  deleteDoc,
+  onSnapshot,
   updateDoc, arrayUnion, arrayRemove,
   addDoc,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
@@ -44,6 +46,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const db = getFirestore(app);
 const provider = new GoogleAuthProvider(app);
 // const database = getDatabase(app);
 const auth = getAuth(app);
@@ -172,6 +175,24 @@ get(child(dbRef, "users/" + user.uid + "/details"))
     break;
   case "link":
     console.log("link");
+
+    const linkcol = collection(db, "users", user.uid,"links");
+    
+    //add data from bottom url and saveing to firestore
+   const addform = document.querySelector(".add");
+    addform.addEventListener("submit", (e) => {
+      e.preventDefault();
+      addDoc(linkcol, {
+        title: addform.title.value,
+        url: addform.url.value,
+      })
+        .then(() => {
+          addform.title.value = "";
+          addform.url.value = "";
+        })
+    })
+    //get data from firestore and display on page
+    
     
     if (!user) {
       window.location.assign("/login");
@@ -278,7 +299,7 @@ set(ref(database, "users/" + user.uid + "/links"), {
 //###################################################### firestore ###############################################
 
 //database init
-const db = getFirestore(app);
+
 
 $(".addData").on("click", (e) => {
   e.preventDefault();
@@ -299,6 +320,7 @@ const details = {
   Name: user.displayName,
   Email: user.email,
   PhotoURL: user.photoURL,
+  bio:"Hi,an app you can share all socials links in one place"
 };
 const links = 
   {
@@ -321,22 +343,27 @@ setDoc(docref, details)
  //set data links
   const linkcol = collection(db, "users", user.uid,"links");
   const linkdoc = doc(linkcol);
-  setDoc(linkdoc, links)
 
-  getDocs(linkcol)
-  .then((snapshot) => {
-    let link = [];
-    snapshot.docs.forEach((doc) => {
-      link.push({...doc.data(),id:doc.id});
-    });
-    console.log(link);
+
+  // setDoc(linkdoc)
+
+  // getDocs(linkcol)
+  // .then((snapshot) => {
+  //   // let link = [];
+  //   // snapshot.docs.forEach((doc) => {
+  //   //   link.push({...doc.data(),id:doc.id});
+  //   // });
+  //   // console.log(link);
    
-  })
-  .catch((error) => {
-    console.log("Error getting documents: ", error);
-  });
+  // })
+  // .catch((error) => {
+  //   console.log("Error getting documents: ", error);
+  // });
 
- 
+  //get data from firestore realtime collection
+  
+
+
 
 getDoc(docref)
   .then((doc) => {
@@ -351,7 +378,44 @@ getDoc(docref)
     console.log("Error getting document:", error.message);
   });
 
-  
+  ////////////////////////////////////////////get data from firestore realtime collection////////////////////////////////////////
+  onSnapshot(linkcol, (snapshot) => {
+    let link = [];
+    snapshot.docs.forEach((doc) => {
+      link.push({...doc.data(),id:doc.id});
+    });
+    console.log(link);
+
+    // link.forEach(element => {
+    //   const button = document.createElement('a');
+    //   button.innerText = element.title;
+    //   button.setAttribute('href', element.url);
+    //   // button.setAttribute('id', 'dynamic');
+    //   button.setAttribute('class', 'links');
+    //   document.body.appendChild(button);
+    // });
+      
+const buttonContainer = document.getElementById('button-container');
+
+link.forEach((element) => {
+  const button = document.createElement('a');
+  button.innerText = element.title;
+  button.setAttribute('href', element.url);
+  button.setAttribute('id', `button-${element.id}`);
+  button.setAttribute('class', 'links');
+  button.addEventListener('click', () => {
+    const buttonToUpdate = document.getElementById(`button-${element.id}`);
+    buttonToUpdate.innerText = `Updated ${element.title}`;
+    buttonToUpdate.setAttribute('href', element.url);
+  });
+  buttonContainer.appendChild(button);
+
+
+     
+    });
+   
+    
+  })
 
 const docRef = doc(db, "users", user.uid);
 // get data

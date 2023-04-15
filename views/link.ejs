@@ -86,7 +86,9 @@
               class="form-control"
               id="urlbtm"
               name="url"
-              placeholder="url"
+              placeholder="https://example.com"
+              required
+              pattern="https://.*"
               style="border-radius: 30px"
             />
             <label for="url">URL</label>
@@ -118,6 +120,7 @@
     </div>
   
   </div>
+  <div id="button-container"></div>
 
   <script>
     // import * as bootstrap from 'bootstrap';
