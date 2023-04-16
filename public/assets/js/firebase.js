@@ -396,9 +396,9 @@ getDoc(docref)
     // });
       
 const buttonContainer = document.getElementById('button-container');
-
+const button = document.createElement('a');
 link.forEach((element) => {
-  const button = document.createElement('a');
+  
   button.innerText = element.title;
   button.setAttribute('href', element.url);
   button.setAttribute('id', `button-${element.id}`);
@@ -408,11 +408,10 @@ link.forEach((element) => {
     buttonToUpdate.innerText = `Updated ${element.title}`;
     buttonToUpdate.setAttribute('href', element.url);
   });
-  buttonContainer.appendChild(button);
-
-
-     
+  
+  
     });
+    buttonContainer.appendChild(button);
    
     
   })
