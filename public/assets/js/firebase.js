@@ -379,7 +379,7 @@ getDoc(docref)
   });
 
   ////////////////////////////////////////////get data from firestore realtime collection////////////////////////////////////////
-  onSnapshot(linkcol, (snapshot) => {
+onSnapshot(linkcol, (snapshot) => {
     let link = [];
     snapshot.docs.forEach((doc) => {
       link.push({...doc.data(),id:doc.id});
@@ -395,27 +395,30 @@ getDoc(docref)
     //   document.body.appendChild(button);
     // });
       
-const buttonContainer = document.getElementById('button-container');
+ const buttonContainer = document.getElementById('button-container');
 
-link.forEach((element) => {
-  const button = document.createElement('a');
+ 
+ link.forEach((element) => {
+   const button = document.createElement('a');
   
-  button.innerText = element.title;
-  button.setAttribute('href', element.url);
-  button.setAttribute('id', `button-${element.id}`);
-  button.setAttribute('class', 'links');
-  button.addEventListener('click', () => {
-    const buttonToUpdate = document.getElementById(`button-${element.id}`);
-    buttonToUpdate.innerText = `Updated ${element.title}`;
-    buttonToUpdate.setAttribute('href', element.url);
+   button.innerText = element.title;
+   button.setAttribute('href', element.url);
+   button.setAttribute('id', `button-${element.id}`);
+   button.setAttribute('class', 'links');
+   button.addEventListener('click', () => {
+  //    const buttonToUpdate = document.getElementById(`button-${element.id}`);
+  //    buttonToUpdate.innerText = element.title;
+  //    buttonToUpdate.setAttribute('href', element.url);
+   });
+   buttonContainer.appendChild(button);
+  
   });
-  buttonContainer.appendChild(button);
   
-    });
+});
     
    
     
-  })
+
 
 const docRef = doc(db, "users", user.uid);
 // get data
