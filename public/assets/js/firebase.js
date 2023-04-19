@@ -405,11 +405,11 @@ onSnapshot(linkcol, (snapshot) => {
    button.setAttribute('href', element.url);
    button.setAttribute('id', `button-${element.id}`);
    button.setAttribute('class', 'links');
-   button.addEventListener('click', () => {
+  //  button.addEventListener('click', () => {
   //    const buttonToUpdate = document.getElementById(`button-${element.id}`);
   //    buttonToUpdate.innerText = element.title;
   //    buttonToUpdate.setAttribute('href', element.url);
-   });
+  //  });
    buttonContainer.appendChild(button);
   
   });
