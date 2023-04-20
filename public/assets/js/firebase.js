@@ -383,8 +383,10 @@ onSnapshot(linkcol, (snapshot) => {
     let link = [];
     snapshot.docs.forEach((doc) => {
       link.push({...doc.data(),id:doc.id});
+      
     });
     console.log(link);
+    // console.log(link[0].title);
 
     // link.forEach(element => {
     //   const button = document.createElement('a');
@@ -413,7 +415,21 @@ onSnapshot(linkcol, (snapshot) => {
    buttonContainer.appendChild(button);
   
   });
+
+// const bottomformbtn = document.getElementById('bottomsavebtn');
+
+//   bottomformbtn.addEventListener('click', () => {
+//     const button = document.createElement('a');
   
+//     button.innerText = link[0].title;
+//     button.setAttribute('href', link[0].url);
+//     button.setAttribute('id', `button-${link[0].id}`);
+//     button.setAttribute('class', 'links');
+
+//     buttonContainer.appendChild(button);
+//     // alert("clicked");
+
+//     });
 });
     
    

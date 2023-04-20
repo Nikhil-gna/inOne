@@ -21,7 +21,7 @@ const scanner = new Html5QrcodeScanner("reader", {
 
   function success(result) {
     document.getElementById("result").innerHTML =
-      `<h1>Success</h1>` + `<p> <a href="${result}">${result}</a> </p>`;
+      `<h1>Success</h1>` + `<p> <a href="${result}">open</a> </p>`;
     scanner.clear();
     document.getElementById("reader").remove();
   }
