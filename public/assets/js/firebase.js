@@ -381,11 +381,38 @@ getDoc(docref)
   ////////////////////////////////////////////get data from firestore realtime collection////////////////////////////////////////
 onSnapshot(linkcol, (snapshot) => {
     let link = [];
+    
     snapshot.docs.forEach((doc) => {
       link.push({...doc.data(),id:doc.id});
+      const currentlinks = link.slice();
+      link.push({...doc.data(),id:doc.id});
+      
+       const newAdditions = link.filter((item) => !currentlinks.includes(item));
+      // const data =newAdditions.join(', ');
+       console.log(newAdditions);
+       const buttonContainer = document.getElementById('button-container');
+
+
+       newAdditions.forEach((links) => {
+        const button = document.createElement('a');
+        button.innerText = links.title;
+        button.setAttribute('href', links.url);
+        button.setAttribute('id', `button-${links.id}`);
+        button.setAttribute('class', 'links');
+        button.addEventListener('click', () => {
+          const buttonToUpdate = document.getElementById(`button-${links.id}`);
+          buttonToUpdate.innerText = links.title;
+          buttonToUpdate.setAttribute('href', links.url);
+        });
+        buttonContainer.appendChild(button);
+      
+      
+       });
+      //  console.log(link);
       
     });
-    console.log(link);
+    
+    // console.log(link);
     // console.log(link[0].title);
 
     // link.forEach(element => {
@@ -397,24 +424,23 @@ onSnapshot(linkcol, (snapshot) => {
     //   document.body.appendChild(button);
     // });
       
- const buttonContainer = document.getElementById('button-container');
 
- 
- link.forEach((element) => {
-   const button = document.createElement('a');
+
+//  link.forEach((element) => {
+//    const button = document.createElement('a');
   
-   button.innerText = element.title;
-   button.setAttribute('href', element.url);
-   button.setAttribute('id', `button-${element.id}`);
-   button.setAttribute('class', 'links');
-  //  button.addEventListener('click', () => {
-  //    const buttonToUpdate = document.getElementById(`button-${element.id}`);
-  //    buttonToUpdate.innerText = element.title;
-  //    buttonToUpdate.setAttribute('href', element.url);
-  //  });
-   buttonContainer.appendChild(button);
+//    button.innerText = element.title;
+//    button.setAttribute('href', element.url);
+//    button.setAttribute('id', `button-${element.id}`);
+//    button.setAttribute('class', 'links');
+//    button.addEventListener('click', () => {
+//      const buttonToUpdate = document.getElementById(`button-${element.id}`);
+//      buttonToUpdate.innerText = element.title;
+//      buttonToUpdate.setAttribute('href', element.url);
+//    });
+//   //  buttonContainer.appendChild(button);
   
-  });
+  // });
 
 // const bottomformbtn = document.getElementById('bottomsavebtn');
 
