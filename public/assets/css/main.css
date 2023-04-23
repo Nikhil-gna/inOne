@@ -208,8 +208,8 @@ a{
 
 .links {
     display: block;
-        background-color:
-        #000000;
+        background-color: #1f1f1f;
+        /* background-color: #000000; */
     color: var(--color-text);
     font-family: var(--font);
     text-align: center;
@@ -225,7 +225,7 @@ a{
 }
 
 .links:hover {
-    background-color: #fff;
+    background-color: #86868b;
     color: #000;
     border: solid var(--color-main) 2px;
 }
