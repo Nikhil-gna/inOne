@@ -412,17 +412,17 @@ onSnapshot(linkcol, (snapshot) => {
       
     });
     
-    // console.log(link);
-    // console.log(link[0].title);
+    console.log(link);
+    console.log(link[0].title);
 
-    // link.forEach(element => {
-    //   const button = document.createElement('a');
-    //   button.innerText = element.title;
-    //   button.setAttribute('href', element.url);
-    //   // button.setAttribute('id', 'dynamic');
-    //   button.setAttribute('class', 'links');
-    //   document.body.appendChild(button);
-    // });
+    link.forEach(element => {
+      const button = document.createElement('a');
+      button.innerText = element.title;
+      button.setAttribute('href', element.url);
+      // button.setAttribute('id', 'dynamic');
+      button.setAttribute('class', 'links');
+      document.body.appendChild(button);
+    });
       
 
 
