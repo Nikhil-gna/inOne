@@ -29,7 +29,9 @@ import {
   doc,
   deleteDoc,
   onSnapshot,
-  updateDoc, arrayUnion, arrayRemove,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
   addDoc,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 
@@ -111,7 +113,6 @@ switch (page) {
 
       getRedirectResult(auth)
         .then((result) => {
-          
           // window.location.assign("/home");
           // This gives you a Google Access Token. You can use it to access Google APIs.
           // window.location.assign("/home");
@@ -127,7 +128,7 @@ switch (page) {
           // IdP data available using getAdditionalUserInfo(result)
           // ...
         })
-      
+
         .catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;
@@ -139,76 +140,71 @@ switch (page) {
           alert(errorMessage);
           // ...
         });
-       
-       
     });
     onAuthStateChanged(auth, (user) => {
       if (user) {
         window.location.assign("/home");
-       } 
+      }
     });
 
     break;
   case "home":
     console.log("home");
-    
+
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.assign("/login");
-       } 
+      }
     });
     const dbRef = ref(getDatabase());
-get(child(dbRef, "users/" + user.uid + "/details"))
-  .then((snapshot) => {
-    if (snapshot.exists()) {
-      document.getElementById("name").innerHTML = snapshot.val().username;
-      document.getElementById("Photo").src = snapshot.val().photoURL;
-    } else {
-      console.log("No data available");
-    }
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
+    get(child(dbRef, "users/" + user.uid + "/details"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          document.getElementById("name").innerHTML = snapshot.val().username;
+          document.getElementById("Photo").src = snapshot.val().photoURL;
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
     break;
   case "link":
     console.log("link");
 
-    const linkcol = collection(db, "users", user.uid,"links");
-    
+    const linkcol = collection(db, "users", user.uid, "links");
+
     //add data from bottom url and saveing to firestore
-   const addform = document.querySelector(".add");
+    const addform = document.querySelector(".add");
     addform.addEventListener("submit", (e) => {
       e.preventDefault();
       addDoc(linkcol, {
         title: addform.title.value,
         url: addform.url.value,
-      })
-        .then(() => {
-          addform.title.value = "";
-          addform.url.value = "";
-        })
-    })
+      }).then(() => {
+        addform.title.value = "";
+        addform.url.value = "";
+      });
+    });
     //get data from firestore and display on page
-    
-    
+
     if (!user) {
       window.location.assign("/login");
-     } 
+    }
     break;
   case "qrscan":
     console.log("qrscan");
     if (!user) {
       window.location.assign("/login");
-     } 
+    }
     break;
   case "profile":
     console.log("profile");
     if (!user) {
       window.location.assign("/login");
-     } 
+    }
     const logout = document.getElementById("logout");
 
     logout.addEventListener("click", function () {
@@ -294,45 +290,39 @@ set(ref(database, "users/" + user.uid + "/links"), {
   url: "link",
 });
 
-
-
 //###################################################### firestore ###############################################
 
 //database init
-
 
 $(".addData").on("click", (e) => {
   e.preventDefault();
   const link = $(".url").val();
   const title = $(".title").val();
-   
+
   $(".url").val("");
   $(".title").val("");
-  
-  addData(link,title);
+
+  addData(link, title);
   // links.push({title:title,url:link});
   // console.log(links);
 });
-
 
 const details = {
   userID: user.uid,
   Name: user.displayName,
   Email: user.email,
   PhotoURL: user.photoURL,
-  bio:"Hi,an app you can share all socials links in one place"
+  bio: "Hi,an app you can share all socials links in one place",
 };
-const links = 
-  {
-    title:"title" ,
-    url: "link",
-  }
+const links = {
+  title: "title",
+  url: "link",
+};
 
 //set data detials
-const colref = collection(db, "users", user.uid,"details");
+const colref = collection(db, "users", user.uid, "details");
 const docref = doc(colref, "details");
 setDoc(docref, details)
-
   .then(() => {
     console.log("Document written with ID: ", docRef.id);
   })
@@ -340,30 +330,26 @@ setDoc(docref, details)
     console.error("Error adding document: ", error);
   });
 
- //set data links
-  const linkcol = collection(db, "users", user.uid,"links");
-  const linkdoc = doc(linkcol);
+//set data links
+const linkcol = collection(db, "users", user.uid, "links");
+const linkdoc = doc(linkcol);
 
+// setDoc(linkdoc)
 
-  // setDoc(linkdoc)
+// getDocs(linkcol)
+// .then((snapshot) => {
+//   // let link = [];
+//   // snapshot.docs.forEach((doc) => {
+//   //   link.push({...doc.data(),id:doc.id});
+//   // });
+//   // console.log(link);
 
-  // getDocs(linkcol)
-  // .then((snapshot) => {
-  //   // let link = [];
-  //   // snapshot.docs.forEach((doc) => {
-  //   //   link.push({...doc.data(),id:doc.id});
-  //   // });
-  //   // console.log(link);
-   
-  // })
-  // .catch((error) => {
-  //   console.log("Error getting documents: ", error);
-  // });
+// })
+// .catch((error) => {
+//   console.log("Error getting documents: ", error);
+// });
 
-  //get data from firestore realtime collection
-  
-
-
+//get data from firestore realtime collection
 
 getDoc(docref)
   .then((doc) => {
@@ -378,88 +364,110 @@ getDoc(docref)
     console.log("Error getting document:", error.message);
   });
 
-  ////////////////////////////////////////////get data from firestore realtime collection////////////////////////////////////////
+////////////////////////////////////////////get data from firestore realtime collection////////////////////////////////////////
+// onSnapshot(linkcol, (snapshot) => {
+//   let link = [];
+
+//   snapshot.docs.forEach((doc) => {
+//     link.push({ ...doc.data(), id: doc.id });
+//     console.log(link);
+//   });
+
+//     const buttonContainer = document.getElementById("button-container");
+   
+//      link.forEach((links) => {
+//       const button = document.createElement('a');
+//       button.innerText = links.title;
+//       button.setAttribute('href', links.url);
+//       button.setAttribute('id', links.id);
+//       button.setAttribute('class', 'links');
+//       buttonContainer.appendChild(button);
+//      });
+//      bottomsavebtn.addEventListener('click', () => {
+//       // const buttonToUpdate = document.getElementById(`button-${links.id}`);
+//       // buttonToUpdate.innerText = links.title;
+//       // buttonToUpdate.setAttribute('href', links.url);
+//       buttonContainer.appendChild(button);
+//     });
+//   });
+ 
+// Define an array to store the IDs of previously added links
+
+let previousLinkIds = [];
 onSnapshot(linkcol, (snapshot) => {
-    let link = [];
-    
-    snapshot.docs.forEach((doc) => {
-      link.push({...doc.data(),id:doc.id});
-      const currentlinks = link.slice();
-      link.push({...doc.data(),id:doc.id});
-      
-       const newAdditions = link.filter((item) => !currentlinks.includes(item));
-      // const data =newAdditions.join(', ');
-       console.log(newAdditions);
-       const buttonContainer = document.getElementById('button-container');
+ 
+  // Define an array to store the newly added links
+  let newLinks = [];
+
+  snapshot.docs.forEach((doc) => {
+    const link = { ...doc.data(), id: doc.id };
+    if (!previousLinkIds.includes(link.id)) {
+      // This is a newly added link
+      newLinks.push(link);
+      previousLinkIds.push(link.id);
+    }
+  });
+
+  console.log(newLinks);
+  const buttonContainer = document.getElementById("button-container");
+
+  // Create buttons for the newly added links
+  newLinks.forEach((link) => {
+    const button = document.createElement("a");
+    button.innerText = link.title;
+    button.setAttribute("href", link.url);
+    button.setAttribute("id", link.id);
+    button.setAttribute("class", "links");
+    buttonContainer.appendChild(button);
+  });
+});
 
 
-       newAdditions.forEach((links) => {
-        const button = document.createElement('a');
-        button.innerText = links.title;
-        button.setAttribute('href', links.url);
-        button.setAttribute('id', `button-${links.id}`);
-        button.setAttribute('class', 'links');
-        button.addEventListener('click', () => {
-          const buttonToUpdate = document.getElementById(`button-${links.id}`);
-          buttonToUpdate.innerText = links.title;
-          buttonToUpdate.setAttribute('href', links.url);
-        });
-        buttonContainer.appendChild(button);
-      
-      
-       });
-      //  console.log(link);
-      
-    });
-    
-    console.log(link);
-    console.log(link[0].title);
+   
+    //  console.log(link);
+ 
+  // console.log(link);
+  // console.log(link[0].title);
 
-    link.forEach(element => {
-      const button = document.createElement('a');
-      button.innerText = element.title;
-      button.setAttribute('href', element.url);
-      // button.setAttribute('id', 'dynamic');
-      button.setAttribute('class', 'links');
-      document.body.appendChild(button);
-    });
-      
-
-
-//  link.forEach((element) => {
-//    const button = document.createElement('a');
-  
-//    button.innerText = element.title;
-//    button.setAttribute('href', element.url);
-//    button.setAttribute('id', `button-${element.id}`);
-//    button.setAttribute('class', 'links');
-//    button.addEventListener('click', () => {
-//      const buttonToUpdate = document.getElementById(`button-${element.id}`);
-//      buttonToUpdate.innerText = element.title;
-//      buttonToUpdate.setAttribute('href', element.url);
-//    });
-//   //  buttonContainer.appendChild(button);
-  
+  // link.forEach(element => {
+  //   const button = document.createElement('a');
+  //   button.innerText = element.title;
+  //   button.setAttribute('href', element.url);
+  //   // button.setAttribute('id', 'dynamic');
+  //   button.setAttribute('class', 'links');
+  //   document.body.appendChild(button);
   // });
 
-// const bottomformbtn = document.getElementById('bottomsavebtn');
+  //  link.forEach((element) => {
+  //    const button = document.createElement('a');
 
-//   bottomformbtn.addEventListener('click', () => {
-//     const button = document.createElement('a');
-  
-//     button.innerText = link[0].title;
-//     button.setAttribute('href', link[0].url);
-//     button.setAttribute('id', `button-${link[0].id}`);
-//     button.setAttribute('class', 'links');
+  //    button.innerText = element.title;
+  //    button.setAttribute('href', element.url);
+  //    button.setAttribute('id', `button-${element.id}`);
+  //    button.setAttribute('class', 'links');
+  //    button.addEventListener('click', () => {
+  //      const buttonToUpdate = document.getElementById(`button-${element.id}`);
+  //      buttonToUpdate.innerText = element.title;
+  //      buttonToUpdate.setAttribute('href', element.url);
+  //    });
+  //   //  buttonContainer.appendChild(button);
 
-//     buttonContainer.appendChild(button);
-//     // alert("clicked");
+  // });
 
-//     });
-});
-    
-   
-    
+  // const bottomformbtn = document.getElementById('bottomsavebtn');
+
+  //   bottomformbtn.addEventListener('click', () => {
+  //     const button = document.createElement('a');
+
+  //     button.innerText = link[0].title;
+  //     button.setAttribute('href', link[0].url);
+  //     button.setAttribute('id', `button-${link[0].id}`);
+  //     button.setAttribute('class', 'links');
+
+  //     buttonContainer.appendChild(button);
+  //     // alert("clicked");
+
+  //     });
 
 
 const docRef = doc(db, "users", user.uid);
@@ -470,14 +478,14 @@ getDoc(docRef)
       // console.log("Document data:", doc.data().links[1]);
       const newdata = [];
       newdata.push(doc.data().links[1].url);
-      
+
       console.log(doc.data().links[1].url);
       // document.getElementById("dynamic").innerHTML = "";
       // document.getElementById("dynamic").href = doc.data().links[1].url;
-      document.getElementById("dynamic").setAttribute("href", doc.data().links[1].url);
+      document
+        .getElementById("dynamic")
+        .setAttribute("href", doc.data().links[1].url);
       document.getElementById("dynamic").innerHTML = doc.data().links[1].title;
-     
-      
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
@@ -486,4 +494,3 @@ getDoc(docRef)
   .catch((error) => {
     console.log("Error getting document:", error.message);
   });
-  
