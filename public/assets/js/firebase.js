@@ -423,52 +423,6 @@ onSnapshot(linkcol, (snapshot) => {
 });
 
 
-   
-    //  console.log(link);
- 
-  // console.log(link);
-  // console.log(link[0].title);
-
-  // link.forEach(element => {
-  //   const button = document.createElement('a');
-  //   button.innerText = element.title;
-  //   button.setAttribute('href', element.url);
-  //   // button.setAttribute('id', 'dynamic');
-  //   button.setAttribute('class', 'links');
-  //   document.body.appendChild(button);
-  // });
-
-  //  link.forEach((element) => {
-  //    const button = document.createElement('a');
-
-  //    button.innerText = element.title;
-  //    button.setAttribute('href', element.url);
-  //    button.setAttribute('id', `button-${element.id}`);
-  //    button.setAttribute('class', 'links');
-  //    button.addEventListener('click', () => {
-  //      const buttonToUpdate = document.getElementById(`button-${element.id}`);
-  //      buttonToUpdate.innerText = element.title;
-  //      buttonToUpdate.setAttribute('href', element.url);
-  //    });
-  //   //  buttonContainer.appendChild(button);
-
-  // });
-
-  // const bottomformbtn = document.getElementById('bottomsavebtn');
-
-  //   bottomformbtn.addEventListener('click', () => {
-  //     const button = document.createElement('a');
-
-  //     button.innerText = link[0].title;
-  //     button.setAttribute('href', link[0].url);
-  //     button.setAttribute('id', `button-${link[0].id}`);
-  //     button.setAttribute('class', 'links');
-
-  //     buttonContainer.appendChild(button);
-  //     // alert("clicked");
-
-  //     });
-
 
 const docRef = doc(db, "users", user.uid);
 // get data
