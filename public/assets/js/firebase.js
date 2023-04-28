@@ -409,7 +409,7 @@ onSnapshot(linkcol, (snapshot) => {
   });
 
   console.log(newLinks);
-  const buttonContainer = document.getElementById("button-container");
+  const buttonContainer = document.getElementById("drop-items");
 
   // Create buttons for the newly added links
   newLinks.forEach((link) => {
