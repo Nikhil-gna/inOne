@@ -173,6 +173,9 @@ switch (page) {
     break;
   case "link":
     console.log("link");
+    if (!user) {
+      window.location.assign("/login");
+    }
 
     const linkcol = collection(db, "users", user.uid, "links");
 
@@ -189,10 +192,7 @@ switch (page) {
       });
     });
     //get data from firestore and display on page
-
-    if (!user) {
-      window.location.assign("/login");
-    }
+   
     break;
   case "qrscan":
     console.log("qrscan");
