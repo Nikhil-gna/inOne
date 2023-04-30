@@ -424,6 +424,45 @@ onSnapshot(linkcol, (snapshot) => {
 
 
 
+
+const linkss = [
+  { url: "https://www.discord.com/", title: "Discord" },
+  { url: "https://www.twitter.com/", title: "Twitter" },
+  { url: "https://www.facebook.com/", title: "Facebook" },
+];
+
+const dropItems = document.getElementById("drop-items");
+
+linkss.forEach((link) => {
+  const dropCard = document.createElement("div");
+  dropCard.classList.add("drop__card");
+
+  const linkDiv = document.createElement("div");
+  dropCard.appendChild(linkDiv);
+
+  const linkTitle = document.createTextNode(link.title);
+  const linkAnchor = document.createElement("a");
+  linkAnchor.appendChild(linkTitle);
+  linkAnchor.href = link.url;
+  linkAnchor.classList.add("drop__name");
+  linkDiv.appendChild(linkAnchor);
+
+  const deleteAnchor = document.createElement("a");
+  deleteAnchor.href = "#";
+  deleteAnchor.classList.add("drop__social");
+  deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
+  deleteAnchor.addEventListener("click", () => {
+    dropCard.remove();
+  });
+  dropCard.appendChild(deleteAnchor);
+
+  dropItems.appendChild(dropCard);
+});
+
+
+
+
+
 const docRef = doc(db, "users", user.uid);
 // get data
 getDoc(docRef)
