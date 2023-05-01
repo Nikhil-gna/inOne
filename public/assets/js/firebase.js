@@ -451,6 +451,12 @@ linkss.forEach((link) => {
   deleteAnchor.href = "#";
   deleteAnchor.classList.add("drop__social");
   deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
+
+  const sortAnchor = document.createElement("a");
+  sortAnchor.href = "#";
+  sortAnchor.classList.add("drop__social");
+  sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
+
   deleteAnchor.addEventListener("click", () => {
     dropCard.remove();
   });

@@ -82,26 +82,58 @@ function toggleTheme() {
  //sort js
 
  /*===== DRAG and DROP =====*/
-const dropItems = document.getElementById('drop-items')
+// const dropItems = document.getElementById('drop-items')
 
-new Sortable(dropItems, {
-    animation: 350,
-    chosenClass: "sortable-chosen",
-    dragClass: "sortable-drag",
-    store: {
-    	// We keep the order of the list
-    	set: (sortable) =>{
-    		const order = sortable.toArray()
-    		localStorage.setItem(sortable.options.group.name, order.join('|'))
-    	},
+// new Sortable(dropItems, {
+//     animation: 350,
+//     chosenClass: "sortable-chosen",
+//     dragClass: "sortable-drag",
+//     store: {
+//     	// We keep the order of the list
+//     	set: (sortable) =>{
+//     		const order = sortable.toArray()
+//     		localStorage.setItem(sortable.options.group.name, order.join('|'))
+//     	},
 
-    	// We get the order of the list
-    	get: (sortable) =>{
-    		const order = localStorage.getItem(sortable.options.group.name)
-    		return order ? order.split('|') : []
+//     	// We get the order of the list
+//     	get: (sortable) =>{
+//     		const order = localStorage.getItem(sortable.options.group.name)
+//     		return order ? order.split('|') : []
 			
-    	}
-    }
+//     	}
+//     }
 	
 	
-}); 
+// }); 
+const sortable = new Sortable(sortbtn, {
+	sort: false,
+	// other options...
+  });
+  let timer;
+let holdDetected = false;
+
+const sortBtn = document.getElementById('sortbtn'); // Replace with your sort button element
+
+sortBtn.addEventListener('mousedown', () => {
+  holdDetected = false;
+  timer = setTimeout(() => {
+    holdDetected = true;
+    sortable.option('sort', true);
+  }, 1000);
+});
+
+sortBtn.addEventListener('mouseup', () => {
+  clearTimeout(timer);
+  if (holdDetected) {
+    // Call the sort function here
+    // For example:
+    // yourArray.sort(yourSortFunction);
+    sortable.option('sort', false);
+  }
+});
+
+document.addEventListener('click', (event) => {
+	if (event.target !== sortBtn) {
+	  sortable.option('sort', false);
+	}
+  });  
