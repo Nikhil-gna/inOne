@@ -412,14 +412,57 @@ onSnapshot(linkcol, (snapshot) => {
   const buttonContainer = document.getElementById("drop-items");
 
   // Create buttons for the newly added links
+  // newLinks.forEach((link) => {
+  //   const button = document.createElement("a");
+  //   button.innerText = link.title;
+  //   button.setAttribute("href", link.url);
+  //   button.setAttribute("id", link.id);
+  //   button.setAttribute("class", "links");
+  //   buttonContainer.appendChild(button);
+  // });
+
   newLinks.forEach((link) => {
-    const button = document.createElement("a");
-    button.innerText = link.title;
-    button.setAttribute("href", link.url);
-    button.setAttribute("id", link.id);
-    button.setAttribute("class", "links");
-    buttonContainer.appendChild(button);
+    const dropCard = document.createElement("div");
+    dropCard.classList.add("drop__card");
+  
+    const linkDiv = document.createElement("div");
+    dropCard.appendChild(linkDiv);
+  
+    const iconsdiv = document.createElement("div");
+    dropCard.appendChild(iconsdiv);
+  
+  
+    const linkTitle = document.createTextNode(link.title);
+    const linkAnchor = document.createElement("a");
+    linkAnchor.id = "link";
+    linkAnchor.appendChild(linkTitle);
+    linkAnchor.href = link.url;
+    linkAnchor.classList.add("drop__name");
+    linkDiv.appendChild(linkAnchor);
+  
+    const deleteAnchor = document.createElement("a");
+    deleteAnchor.href = "#";
+    deleteAnchor.classList.add("drop__social");
+    deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
+  
+    const sortAnchor = document.createElement("a");
+    sortAnchor.href = "#";
+    sortAnchor.classList.add("drop__social");
+    sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
+    sortAnchor.id = "sortbtn";
+  
+    deleteAnchor.addEventListener("click", () => {
+      dropCard.remove();
+    });
+    
+    iconsdiv.appendChild(sortAnchor);
+    iconsdiv.appendChild(deleteAnchor);
+  
+    dropItems.appendChild(dropCard);
   });
+
+
+  
 });
 
 
@@ -433,39 +476,45 @@ const linkss = [
 
 const dropItems = document.getElementById("drop-items");
 
-linkss.forEach((link) => {
-  const dropCard = document.createElement("div");
-  dropCard.classList.add("drop__card");
+// linkss.forEach((link) => {
+//   const dropCard = document.createElement("div");
+//   dropCard.classList.add("drop__card");
 
-  const linkDiv = document.createElement("div");
-  dropCard.appendChild(linkDiv);
+//   const linkDiv = document.createElement("div");
+//   dropCard.appendChild(linkDiv);
 
-  const linkTitle = document.createTextNode(link.title);
-  const linkAnchor = document.createElement("a");
-  linkAnchor.appendChild(linkTitle);
-  linkAnchor.href = link.url;
-  linkAnchor.classList.add("drop__name");
-  linkDiv.appendChild(linkAnchor);
-
-  const deleteAnchor = document.createElement("a");
-  deleteAnchor.href = "#";
-  deleteAnchor.classList.add("drop__social");
-  deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
-
-  const sortAnchor = document.createElement("a");
-  sortAnchor.href = "#";
-  sortAnchor.classList.add("drop__social");
-  sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
-
-  deleteAnchor.addEventListener("click", () => {
-    dropCard.remove();
-  });
-  dropCard.appendChild(deleteAnchor);
-
-  dropItems.appendChild(dropCard);
-});
+//   const iconsdiv = document.createElement("div");
+//   dropCard.appendChild(iconsdiv);
 
 
+//   const linkTitle = document.createTextNode(link.title);
+//   const linkAnchor = document.createElement("a");
+//   linkAnchor.id = "link";
+//   linkAnchor.appendChild(linkTitle);
+//   linkAnchor.href = link.url;
+//   linkAnchor.classList.add("drop__name");
+//   linkDiv.appendChild(linkAnchor);
+
+//   const deleteAnchor = document.createElement("a");
+//   deleteAnchor.href = "#";
+//   deleteAnchor.classList.add("drop__social");
+//   deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
+
+//   const sortAnchor = document.createElement("a");
+//   sortAnchor.href = "#";
+//   sortAnchor.classList.add("drop__social");
+//   sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
+//   sortAnchor.id = "sortbtn";
+
+//   deleteAnchor.addEventListener("click", () => {
+//     dropCard.remove();
+//   });
+  
+//   iconsdiv.appendChild(sortAnchor);
+//   iconsdiv.appendChild(deleteAnchor);
+
+//   dropItems.appendChild(dropCard);
+// });
 
 
 
