@@ -453,73 +453,27 @@ onSnapshot(linkcol, (snapshot) => {
       dropCard.remove();
     });
 
-    // sortAnchor.addEventListener("click", () => {
-    //   const dropItems = document.getElementById("drop-items");
+    sortAnchor.addEventListener("click", () => {
+      const dropItems = document.getElementById("drop-items");
 
-    //   new Sortable(dropItems, {
-    //     animation: 350,
-    //     chosenClass: "sortable-chosen",
-    //     dragClass: "sortable-drag",
-    //     store: {
-    //       // We keep the order of the list
-    //       set: (sortable) => {
-    //         const order = sortable.toArray();
-    //         localStorage.setItem(sortable.options.group.name, order.join("|"));
-    //       },
-
-    //       // We get the order of the list
-    //       get: (sortable) => {
-    //         const order = localStorage.getItem(sortable.options.group.name);
-    //         return order ? order.split("|") : [];
-    //       },
-    //     },
-    //   });
-    // });
-
-    // Get the sort button element
-    const sortButton = document.getElementById("sortbtn");
-
-    // Create a variable to track the timeout
-    let sortTimeout;
-
-    // Add a click event listener to the sort button
-    sortAnchor.addEventListener("mousedown", () => {
-      // Start the timeout
-      sortTimeout = setTimeout(() => {
-        // Run the Sortable code after 1 second
-        const dropItems = document.getElementById("drop-items");
-        new Sortable(dropItems, {
-          animation: 350,
-          chosenClass: "sortable-chosen",
-          dragClass: "sortable-drag",
-          store: {
-            // We keep the order of the list
-            set: (sortable) => {
-              const order = sortable.toArray();
-              localStorage.setItem(
-                sortable.options.group.name,
-                order.join("|")
-              );
-            },
-
-            // We get the order of the list
-            get: (sortable) => {
-              const order = localStorage.getItem(sortable.options.group.name);
-              return order ? order.split("|") : [];
-            },
+      new Sortable(dropItems, {
+        animation: 350,
+        chosenClass: "sortable-chosen",
+        dragClass: "sortable-drag",
+        store: {
+          // We keep the order of the list
+          set: (sortable) => {
+            const order = sortable.toArray();
+            localStorage.setItem(sortable.options.group.name, order.join("|"));
           },
-        });
-      }, 1000);
-    });
 
-    // Add a mouseup event listener to the sort button to clear the timeout
-    sortAnchor.addEventListener("mouseup", () => {
-      clearTimeout(sortTimeout);
-    });
-
-    // Add a mouseleave event listener to the sort button to clear the timeout
-    sortAnchor.addEventListener("mouseleave", () => {
-      clearTimeout(sortTimeout);
+          // We get the order of the list
+          get: (sortable) => {
+            const order = localStorage.getItem(sortable.options.group.name);
+            return order ? order.split("|") : [];
+          },
+        },
+      });
     });
 
     iconsdiv.appendChild(sortAnchor);
