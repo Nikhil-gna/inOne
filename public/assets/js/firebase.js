@@ -192,7 +192,7 @@ switch (page) {
       });
     });
     //get data from firestore and display on page
-   
+
     break;
   case "qrscan":
     console.log("qrscan");
@@ -374,7 +374,7 @@ getDoc(docref)
 //   });
 
 //     const buttonContainer = document.getElementById("button-container");
-   
+
 //      link.forEach((links) => {
 //       const button = document.createElement('a');
 //       button.innerText = links.title;
@@ -390,12 +390,11 @@ getDoc(docref)
 //       buttonContainer.appendChild(button);
 //     });
 //   });
- 
+
 // Define an array to store the IDs of previously added links
 
 let previousLinkIds = [];
 onSnapshot(linkcol, (snapshot) => {
- 
   // Define an array to store the newly added links
   let newLinks = [];
 
@@ -424,14 +423,13 @@ onSnapshot(linkcol, (snapshot) => {
   newLinks.forEach((link) => {
     const dropCard = document.createElement("div");
     dropCard.classList.add("drop__card");
-  
+
     const linkDiv = document.createElement("div");
     dropCard.appendChild(linkDiv);
-  
+
     const iconsdiv = document.createElement("div");
     dropCard.appendChild(iconsdiv);
-  
-  
+
     const linkTitle = document.createTextNode(link.title);
     const linkAnchor = document.createElement("a");
     linkAnchor.id = "link";
@@ -439,58 +437,97 @@ onSnapshot(linkcol, (snapshot) => {
     linkAnchor.href = link.url;
     linkAnchor.classList.add("drop__name");
     linkDiv.appendChild(linkAnchor);
-  
+
     const deleteAnchor = document.createElement("a");
     deleteAnchor.href = "#";
     deleteAnchor.classList.add("drop__social");
     deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
-  
+
     const sortAnchor = document.createElement("a");
     sortAnchor.href = "#";
     sortAnchor.classList.add("drop__social");
     sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
     sortAnchor.id = "sortbtn";
-  
+
     deleteAnchor.addEventListener("click", () => {
       dropCard.remove();
     });
 
-    sortAnchor.addEventListener("click", () => {
-      const dropItems = document.getElementById('drop-items')
+    // sortAnchor.addEventListener("click", () => {
+    //   const dropItems = document.getElementById("drop-items");
 
-new Sortable(dropItems, {
-    animation: 350,
-    chosenClass: "sortable-chosen",
-    dragClass: "sortable-drag",
-    store: {
-    	// We keep the order of the list
-    	set: (sortable) =>{
-    		const order = sortable.toArray()
-    		localStorage.setItem(sortable.options.group.name, order.join('|'))
-    	},
+    //   new Sortable(dropItems, {
+    //     animation: 350,
+    //     chosenClass: "sortable-chosen",
+    //     dragClass: "sortable-drag",
+    //     store: {
+    //       // We keep the order of the list
+    //       set: (sortable) => {
+    //         const order = sortable.toArray();
+    //         localStorage.setItem(sortable.options.group.name, order.join("|"));
+    //       },
 
-    	// We get the order of the list
-    	get: (sortable) =>{
-    		const order = localStorage.getItem(sortable.options.group.name)
-    		return order ? order.split('|') : []
-			
-    	}
-	}
-}); 
+    //       // We get the order of the list
+    //       get: (sortable) => {
+    //         const order = localStorage.getItem(sortable.options.group.name);
+    //         return order ? order.split("|") : [];
+    //       },
+    //     },
+    //   });
+    // });
+
+    // Get the sort button element
+    const sortButton = document.getElementById("sortbtn");
+
+    // Create a variable to track the timeout
+    let sortTimeout;
+
+    // Add a click event listener to the sort button
+    sortAnchor.addEventListener("mousedown", () => {
+      // Start the timeout
+      sortTimeout = setTimeout(() => {
+        // Run the Sortable code after 1 second
+        const dropItems = document.getElementById("drop-items");
+        new Sortable(dropItems, {
+          animation: 350,
+          chosenClass: "sortable-chosen",
+          dragClass: "sortable-drag",
+          store: {
+            // We keep the order of the list
+            set: (sortable) => {
+              const order = sortable.toArray();
+              localStorage.setItem(
+                sortable.options.group.name,
+                order.join("|")
+              );
+            },
+
+            // We get the order of the list
+            get: (sortable) => {
+              const order = localStorage.getItem(sortable.options.group.name);
+              return order ? order.split("|") : [];
+            },
+          },
+        });
+      }, 1000);
     });
-    
+
+    // Add a mouseup event listener to the sort button to clear the timeout
+    sortAnchor.addEventListener("mouseup", () => {
+      clearTimeout(sortTimeout);
+    });
+
+    // Add a mouseleave event listener to the sort button to clear the timeout
+    sortAnchor.addEventListener("mouseleave", () => {
+      clearTimeout(sortTimeout);
+    });
+
     iconsdiv.appendChild(sortAnchor);
     iconsdiv.appendChild(deleteAnchor);
-  
+
     dropItems.appendChild(dropCard);
   });
-
-
-  
 });
-
-
-
 
 const linkss = [
   { url: "https://www.discord.com/", title: "Discord" },
@@ -509,7 +546,6 @@ const dropItems = document.getElementById("drop-items");
 
 //   const iconsdiv = document.createElement("div");
 //   dropCard.appendChild(iconsdiv);
-
 
 //   const linkTitle = document.createTextNode(link.title);
 //   const linkAnchor = document.createElement("a");
@@ -533,14 +569,12 @@ const dropItems = document.getElementById("drop-items");
 //   deleteAnchor.addEventListener("click", () => {
 //     dropCard.remove();
 //   });
-  
+
 //   iconsdiv.appendChild(sortAnchor);
 //   iconsdiv.appendChild(deleteAnchor);
 
 //   dropItems.appendChild(dropCard);
 // });
-
-
 
 const docRef = doc(db, "users", user.uid);
 // get data
