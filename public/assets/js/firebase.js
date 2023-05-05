@@ -463,25 +463,57 @@ onSnapshot(linkcol, (snapshot) => {
     sortAnchor.addEventListener("click", () => {
       const dropItems = document.getElementById('drop-items')
 
-new Sortable(dropItems, {
-    animation: 350,
-    chosenClass: "sortable-chosen",
-    dragClass: "sortable-drag",
-    store: {
-    	// We keep the order of the list
-    	set: (sortable) =>{
-    		const order = sortable.toArray()
-    		localStorage.setItem(sortable.options.group.name, order.join('|'))
-    	},
+      new Sortable(dropItems, {
+        animation: 350,
+        chosenClass: "sortable-chosen",
+        dragClass: "sortable-drag",
+        store: {
+            // We keep the order of the list
+            set: async (sortable) => {
+                const order = sortable.toArray();
+                localStorage.setItem(sortable.options.group.name, order.join('|'));
+    
+                // Update the Firebase document
+                try {
+                    const docRef = doc(db, "links", link.id);
+                    await updateDoc(docRef, {
+                        order: order.join('|')
+                    });
+                } catch (error) {
+                    console.error("Error updating Firebase document:", error);
+                }
+                console.log(order);
+            },
+           
+    
+            // We get the order of the list
+            get: (sortable) => {
+                const order = localStorage.getItem(sortable.options.group.name);
+                return order ? order.split('|') : [];
+            }
+        }
+    });
+    
 
-    	// We get the order of the list
-    	get: (sortable) =>{
-    		const order = localStorage.getItem(sortable.options.group.name)
-    		return order ? order.split('|') : []
+// new Sortable(dropItems, {
+//     animation: 350,
+//     chosenClass: "sortable-chosen",
+//     dragClass: "sortable-drag",
+//     store: {
+//     	// We keep the order of the list
+//     	set: (sortable) =>{
+//     		const order = sortable.toArray()
+//     		localStorage.setItem(sortable.options.group.name, order.join('|'))
+//     	},
+
+//     	// We get the order of the list
+//     	get: (sortable) =>{
+//     		const order = localStorage.getItem(sortable.options.group.name)
+//     		return order ? order.split('|') : []
 			
-    	}
-	}
-}); 
+//     	}
+// 	}
+// }); 
     });
 
     
