@@ -392,7 +392,6 @@ getDoc(docref)
 //   });
  
 // Define an array to store the IDs of previously added links
-
 let previousLinkIds = [];
 onSnapshot(linkcol, (snapshot) => {
  
@@ -541,6 +540,7 @@ async function saveLinks() {
   console.log('Links saved successfully!');
 }
 
+
 // Display the links in the container
 function displayLinks() {
   const linksHTML = newLink.map(link => `
@@ -549,12 +549,11 @@ function displayLinks() {
     </a>
   `).join('');
 
+  console.log(newLink);
   sortableContainer.innerHTML = linksHTML;
 }
 
 });
-
-
 
 
 const linkss = [
