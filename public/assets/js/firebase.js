@@ -33,6 +33,11 @@ import {
   arrayUnion,
   arrayRemove,
   addDoc,
+  query, 
+  where,
+  orderBy,
+  
+
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -410,150 +415,160 @@ onSnapshot(linkcol, (snapshot) => {
   console.log(newLinks);
   const buttonContainer = document.getElementById("drop-items");
 
-  // Create buttons for the newly added links
-  // newLinks.forEach((link) => {
-  //   const button = document.createElement("a");
-  //   button.innerText = link.title;
-  //   button.setAttribute("href", link.url);
-  //   button.setAttribute("id", link.id);
-  //   button.setAttribute("class", "links");
-  //   buttonContainer.appendChild(button);
-  // });
 
-
-  // newLinks.forEach((link) => {
-  //   const dropCard = document.createElement("div");
-  //   dropCard.classList.add("drop__card");
+  newLinks.forEach((link) => {
+    const dropCard = document.createElement("div");
+    dropCard.classList.add("drop__card");
   
-  //   const linkDiv = document.createElement("div");
-  //   dropCard.appendChild(linkDiv);
+    const linkDiv = document.createElement("div");
+    dropCard.appendChild(linkDiv);
   
-  //   const iconsdiv = document.createElement("div");
-  //   dropCard.appendChild(iconsdiv);
+    const iconsdiv = document.createElement("div");
+    dropCard.appendChild(iconsdiv);
   
   
-  //   const linkTitle = document.createTextNode(link.title);
-  //   const linkAnchor = document.createElement("a");
-  //   linkAnchor.id = link.id;
-  //   linkAnchor.appendChild(linkTitle);
-  //   linkAnchor.href = link.url;
-  //   linkAnchor.classList.add("drop__name");
-  //   linkDiv.appendChild(linkAnchor);
+    const linkTitle = document.createTextNode(link.title);
+    const linkAnchor = document.createElement("a");
+    linkAnchor.id = link.id;
+    linkAnchor.appendChild(linkTitle);
+    linkAnchor.href = link.url;
+    linkAnchor.classList.add("drop__name");
+    linkDiv.appendChild(linkAnchor);
   
-  //   const deleteAnchor = document.createElement("a");
-  //   deleteAnchor.href = "#";
-  //   deleteAnchor.id=link.id;
-  //   deleteAnchor.classList.add("drop__social");
-  //   deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
+    const deleteAnchor = document.createElement("a");
+    deleteAnchor.href = "#";
+    deleteAnchor.id=link.id;
+    deleteAnchor.classList.add("drop__social");
+    deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
   
-  //   const sortAnchor = document.createElement("a");
-  //   sortAnchor.href = "#";
-  //   sortAnchor.classList.add("drop__social");
-  //   sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
-  //   sortAnchor.id = "sortbtn";
+    const sortAnchor = document.createElement("a");
+    sortAnchor.href = "#";
+    sortAnchor.classList.add("drop__social");
+    sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
+    sortAnchor.id = "sortbtn";
   
-  //   deleteAnchor.addEventListener("click", () => {
-  //     if (confirm("Are you sure you want to delete?")) {
-  //       deleteDoc(doc(linkcol, link.id));
-  //       dropCard.remove();
-  //     }
+    deleteAnchor.addEventListener("click", () => {
+      if (confirm("Are you sure you want to delete?")) {
+        deleteDoc(doc(linkcol, link.id));
+        dropCard.remove();
+      }
       
-  //   });
+    });
 
     
-  //   sortAnchor.addEventListener("click", () => {
-  //     const dropItems = document.getElementById('drop-items')
-
-
-
-  //   });
+    sortAnchor.addEventListener("click", () => {
+      const dropItems = document.getElementById('drop-items')
+      const sortable = Sortable.create(dropItems, {
+        onEnd: function (evt) {
+          // Get the updated order of the links
+          const links = []
+          const dropCards = document.querySelectorAll('.drop__card')
+          dropCards.forEach(card => {
+            const link = newLinks.find(l => l.id === card.querySelector('.drop__name').id)
+            if (link) {
+              links.push(link)
+            }
+          })
+    
+          // Save the updated order of the links to the database
+          const batch = db.batch()
+          links.forEach((link, index) => {
+            const docRef = doc(linkcol, link.id)
+            batch.update(docRef, { order: index })
+          })
+          batch.commit()
+        }
+      })
+    })
+    
 
     
-  //   iconsdiv.appendChild(sortAnchor);
-  //   iconsdiv.appendChild(deleteAnchor);
+    iconsdiv.appendChild(sortAnchor);
+    iconsdiv.appendChild(deleteAnchor);
 
-  //   dropItems.appendChild(dropCard);
+    dropItems.appendChild(dropCard);
 
-  // });
+  });
+});
 
 
   // Get the links container and initialize Sortable.js
 
 // Get the links container and initialize Sortable.js
-const sortableContainer = document.getElementById('drop-items');
 
-const sortable = new Sortable(sortableContainer, {
-  onEnd: event => {
-    const { newIndex, oldIndex } = event;
-    const linkElements = sortableContainer.querySelectorAll('a');
-    const newOrder = [];
+// const sortableContainer = document.getElementById('drop-items');
 
-    linkElements.forEach(linkElement => {
-      const linkId = linkElement.getAttribute('data-id');
-      const link = newLink.find(link => link.id === linkId);
-      newOrder.push(link);
-    });
+// const sortable = new Sortable(sortableContainer, {
+//   onEnd: event => {
+//     const { newIndex, oldIndex } = event;
+//     const linkElements = sortableContainer.querySelectorAll('a');
+//     const newOrder = [];
 
-    newLink.splice(0, newLink.length, ...newOrder);
-    saveLinks();
-  }
-});
+//     linkElements.forEach(linkElement => {
+//       const linkId = linkElement.getAttribute('data-id');
+//       const link = newLink.find(link => link.id === linkId);
+//       newOrder.push(link);
+//     });
 
-// Load links from Firestore or use the default array
-let newLink;
-(async function() {
-  const docRef = doc(db, 'links', 'links');
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    newLink = docSnap.data().links;
-  } else {
-    newLink = [
-      {
-        "title": "instagram",
-        "url": "https://www.instagram.com/",
-        "id": "GQnaQ7ZUSt6tAFUEQaui"
-      },
-      {
-        "title": "discord",
-        "url": "https://www.discord.com/",
-        "id": "JBsQuuRAU0vTg2p6KctB"
-      },
-      {
-        "url": "https://www.apple.com/",
-        "title": "apple",
-        "id": "Oi9fc4ZvbEj1LI3tjJXC"
-      },
-      {
-        "title": "youtube",
-        "url": "https://www.youtube.com/",
-        "id": "o5U133VALKeuCjslqGY6"
-      }
-    ];
-    await setDoc(doc(db, 'links', 'links'), { links: newLink });
-  }
-  displayLinks();
-})();
+//     newLink.splice(0, newLink.length, ...newOrder);
+//     saveLinks();
+//   }
+// });
 
-// Save the links array to Firestore
-async function saveLinks() {
-  await setDoc(doc(db, 'links', 'links'), { links: newLink });
-  console.log('Links saved successfully!');
-}
+// // Load links from Firestore or use the default array
+// let newLink;
+// (async function() {
+//   const docRef = doc(db, 'links', 'links');
+//   const docSnap = await getDoc(docRef);
+//   if (docSnap.exists()) {
+//     newLink = docSnap.data().links;
+//   } else {
+//     newLink = [
+//       {
+//         "title": "instagram",
+//         "url": "https://www.instagram.com/",
+//         "id": "GQnaQ7ZUSt6tAFUEQaui"
+//       },
+//       {
+//         "title": "discord",
+//         "url": "https://www.discord.com/",
+//         "id": "JBsQuuRAU0vTg2p6KctB"
+//       },
+//       {
+//         "url": "https://www.apple.com/",
+//         "title": "apple",
+//         "id": "Oi9fc4ZvbEj1LI3tjJXC"
+//       },
+//       {
+//         "title": "youtube",
+//         "url": "https://www.youtube.com/",
+//         "id": "o5U133VALKeuCjslqGY6"
+//       }
+//     ];
+//     await setDoc(doc(db, 'links', 'links'), { links: newLink });
+//   }
+//   displayLinks();
+// })();
+
+// // Save the links array to Firestore
+// async function saveLinks() {
+//   await setDoc(doc(db, 'links', 'links'), { links: newLink });
+//   console.log('Links saved successfully!');
+// }
 
 
-// Display the links in the container
-function displayLinks() {
-  const linksHTML = newLink.map(link => `
-    <a href="${link.url}" data-id="${link.id}">
-      <div class="title">${link.title}</div>
-    </a>
-  `).join('');
+// // Display the links in the container
+// function displayLinks() {
+//   const linksHTML = newLink.map(link => `
+//     <a href="${link.url}" data-id="${link.id}">
+//       <div class="title">${link.title}</div>
+//     </a>
+//   `).join('');
 
-  console.log(newLink);
-  sortableContainer.innerHTML = linksHTML;
-}
+//   console.log(newLink);
+//   sortableContainer.innerHTML = linksHTML;
+// }
 
-});
 
 
 const linkss = [
