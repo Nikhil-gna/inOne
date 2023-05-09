@@ -33,12 +33,14 @@ import {
   arrayUnion,
   arrayRemove,
   addDoc,
-  query, 
+  query,
   where,
   orderBy,
-  
-
+  writeBatch,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
+
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
@@ -197,7 +199,7 @@ switch (page) {
       });
     });
     //get data from firestore and display on page
-   
+
     break;
   case "qrscan":
     console.log("qrscan");
@@ -379,7 +381,7 @@ getDoc(docref)
 //   });
 
 //     const buttonContainer = document.getElementById("button-container");
-   
+
 //      link.forEach((links) => {
 //       const button = document.createElement('a');
 //       button.innerText = links.title;
@@ -395,11 +397,10 @@ getDoc(docref)
 //       buttonContainer.appendChild(button);
 //     });
 //   });
- 
+
 // Define an array to store the IDs of previously added links
 let previousLinkIds = [];
 onSnapshot(linkcol, (snapshot) => {
- 
   // Define an array to store the newly added links
   let newLinks = [];
 
@@ -415,18 +416,16 @@ onSnapshot(linkcol, (snapshot) => {
   console.log(newLinks);
   const buttonContainer = document.getElementById("drop-items");
 
-
   newLinks.forEach((link) => {
     const dropCard = document.createElement("div");
     dropCard.classList.add("drop__card");
-  
+
     const linkDiv = document.createElement("div");
     dropCard.appendChild(linkDiv);
-  
+
     const iconsdiv = document.createElement("div");
     dropCard.appendChild(iconsdiv);
-  
-  
+
     const linkTitle = document.createTextNode(link.title);
     const linkAnchor = document.createElement("a");
     linkAnchor.id = link.id;
@@ -434,65 +433,85 @@ onSnapshot(linkcol, (snapshot) => {
     linkAnchor.href = link.url;
     linkAnchor.classList.add("drop__name");
     linkDiv.appendChild(linkAnchor);
-  
+
     const deleteAnchor = document.createElement("a");
     deleteAnchor.href = "#";
-    deleteAnchor.id=link.id;
+    deleteAnchor.id = link.id;
     deleteAnchor.classList.add("drop__social");
     deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
-  
+
     const sortAnchor = document.createElement("a");
     sortAnchor.href = "#";
     sortAnchor.classList.add("drop__social");
     sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
     sortAnchor.id = "sortbtn";
-  
+
     deleteAnchor.addEventListener("click", () => {
       if (confirm("Are you sure you want to delete?")) {
         deleteDoc(doc(linkcol, link.id));
         dropCard.remove();
       }
-      
     });
 
-    
-    sortAnchor.addEventListener("click", () => {
-      const dropItems = document.getElementById('drop-items')
-      const sortable = Sortable.create(dropItems, {
-        onEnd: function (evt) {
-          // Get the updated order of the links
-          const links = []
-          const dropCards = document.querySelectorAll('.drop__card')
-          dropCards.forEach(card => {
-            const link = newLinks.find(l => l.id === card.querySelector('.drop__name').id)
-            if (link) {
-              links.push(link)
-            }
-          })
-    
-          // Save the updated order of the links to the database
-          const batch = db.batch()
-          links.forEach((link, index) => {
-            const docRef = doc(linkcol, link.id)
-            batch.update(docRef, { order: index })
-          })
-          batch.commit()
+sortAnchor.addEventListener("click", () => {
+  const dropItems = document.getElementById("drop-items");
+  const sortable = Sortable.create(dropItems, {
+    onEnd: function (evt) {
+      // Get the updated order of the links
+      const links = [];
+      const dropCards = document.querySelectorAll(".drop__card");
+      dropCards.forEach((card) => {
+        const link = newLinks.find(
+          (l) => l.id === card.querySelector(".drop__name").id
+        );
+        if (link) {
+          links.push(link);
+          
         }
-      })
-    })
-    
+      });
 
+      console.log(links);
+      
+      
+         // Save the sorted links to Firestore
+     
+         const firestore = getFirestore(app);
+         const batch = writeBatch(firestore);
+         
+         links.forEach((link, index) => {
+          //  const linkRef = doc(firestore, "links", link.id);
+           const linkRef = doc(firestore, "users", user.uid, "links", link.id);
+
+          //  const linkRef = doc(linkcol,link.id);
+         
+           batch.update(linkRef, { order: index });
+         });
+         
+         batch
+           .commit()
+           .then(() => {
+             console.log("Links updated successfully");
+           })
+           .catch((error) => {
+             console.error("Error updating links:", error);
+           });
+       }
     
+  });
+  
+});
+
+
+
+
     iconsdiv.appendChild(sortAnchor);
     iconsdiv.appendChild(deleteAnchor);
 
     dropItems.appendChild(dropCard);
-
   });
 });
 
-
-  // Get the links container and initialize Sortable.js
+// Get the links container and initialize Sortable.js
 
 // Get the links container and initialize Sortable.js
 
@@ -556,7 +575,6 @@ onSnapshot(linkcol, (snapshot) => {
 //   console.log('Links saved successfully!');
 // }
 
-
 // // Display the links in the container
 // function displayLinks() {
 //   const linksHTML = newLink.map(link => `
@@ -569,8 +587,6 @@ onSnapshot(linkcol, (snapshot) => {
 //   sortableContainer.innerHTML = linksHTML;
 // }
 
-
-
 const linkss = [
   { url: "https://www.discord.com/", title: "Discord" },
   { url: "https://www.twitter.com/", title: "Twitter" },
@@ -578,47 +594,6 @@ const linkss = [
 ];
 
 const dropItems = document.getElementById("drop-items");
-
-// linkss.forEach((link) => {
-//   const dropCard = document.createElement("div");
-//   dropCard.classList.add("drop__card");
-
-//   const linkDiv = document.createElement("div");
-//   dropCard.appendChild(linkDiv);
-
-//   const iconsdiv = document.createElement("div");
-//   dropCard.appendChild(iconsdiv);
-
-
-//   const linkTitle = document.createTextNode(link.title);
-//   const linkAnchor = document.createElement("a");
-//   linkAnchor.id = "link";
-//   linkAnchor.appendChild(linkTitle);
-//   linkAnchor.href = link.url;
-//   linkAnchor.classList.add("drop__name");
-//   linkDiv.appendChild(linkAnchor);
-
-//   const deleteAnchor = document.createElement("a");
-//   deleteAnchor.href = "#";
-//   deleteAnchor.classList.add("drop__social");
-//   deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
-
-//   const sortAnchor = document.createElement("a");
-//   sortAnchor.href = "#";
-//   sortAnchor.classList.add("drop__social");
-//   sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
-//   sortAnchor.id = "sortbtn";
-
-//   deleteAnchor.addEventListener("click", () => {
-//     dropCard.remove();
-//   });
-  
-//   iconsdiv.appendChild(sortAnchor);
-//   iconsdiv.appendChild(deleteAnchor);
-
-//   dropItems.appendChild(dropCard);
-// });
-
 
 
 const docRef = doc(db, "users", user.uid);
