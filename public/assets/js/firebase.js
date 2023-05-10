@@ -435,13 +435,11 @@ onSnapshot(linkcol, (snapshot) => {
     linkDiv.appendChild(linkAnchor);
 
     const deleteAnchor = document.createElement("a");
-    deleteAnchor.href = "#";
     deleteAnchor.id = link.id;
     deleteAnchor.classList.add("drop__social");
     deleteAnchor.innerHTML = "<i class='bx bxs-trash-alt'></i>";
 
     const sortAnchor = document.createElement("a");
-    sortAnchor.href = "#";
     sortAnchor.classList.add("drop__social");
     sortAnchor.innerHTML = "<i class='bx bxs-sort-alt'></i>";
     sortAnchor.id = "sortbtn";
