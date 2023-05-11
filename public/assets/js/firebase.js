@@ -448,8 +448,17 @@ onSnapshot(linkcol, (snapshot) => {
       if (confirm("Are you sure you want to delete?")) {
         deleteDoc(doc(linkcol, link.id));
         dropCard.remove();
+        const toast = document.createElement("div");
+        toast.classList.add("toast");
+        toast.innerText = "Item deleted successfully!";
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.remove();
+        }, 3000); // remove the toast message after 3 seconds
       }
     });
+    
+
 
 sortAnchor.addEventListener("click", () => {
   const dropItems = document.getElementById("drop-items");
