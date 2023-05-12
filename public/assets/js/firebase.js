@@ -40,8 +40,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 
 
-
-
 const firebaseConfig = {
   apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
   authDomain: "inone-f777c.firebaseapp.com",
@@ -341,6 +339,7 @@ setDoc(docref, details)
 const linkcol = collection(db, "users", user.uid, "links");
 const linkdoc = doc(linkcol);
 
+
 // setDoc(linkdoc)
 
 // getDocs(linkcol)
@@ -459,54 +458,94 @@ onSnapshot(linkcol, (snapshot) => {
     });
     
 
-
-sortAnchor.addEventListener("click", () => {
-  const dropItems = document.getElementById("drop-items");
-  const sortable = Sortable.create(dropItems, {
-    onEnd: function (evt) {
-      // Get the updated order of the links
-      const links = [];
-      const dropCards = document.querySelectorAll(".drop__card");
-      dropCards.forEach((card) => {
-        const link = newLinks.find(
-          (l) => l.id === card.querySelector(".drop__name").id
-        );
-        if (link) {
-          links.push(link);
-          
-        }
-      });
-
-      console.log(links);
-      
-      
-         // Save the sorted links to Firestore
-     
-         const firestore = getFirestore(app);
-         const batch = writeBatch(firestore);
-         
-         links.forEach((link, index) => {
-          //  const linkRef = doc(firestore, "links", link.id);
-           const linkRef = doc(firestore, "users", user.uid, "links", link.id);
-
-          //  const linkRef = doc(linkcol,link.id);
-         
-           batch.update(linkRef, { order: index });
-         });
-         
-         batch
-           .commit()
-           .then(() => {
-             console.log("Links updated successfully");
-           })
-           .catch((error) => {
-             console.error("Error updating links:", error);
-           });
-       }
-    
-  });
   
-});
+  
+
+    
+    sortAnchor.addEventListener("click", async () => {
+      const dropItems = document.getElementById("drop-items");
+      // const linksCollection = collection(getFirestore(), "users", firebase.auth().currentUser.uid, "links");
+      // const linksCollection = collection(firestore, "users", user.uid, "links");
+
+      const linksCollection = collection(db, "users", user.uid, "links");
+      // Initialize SortableJS on the dropItems element
+      const sortable = new Sortable(dropItems, {
+        handle: ".drop__name",
+        animation: 150,
+        onEnd: async (evt) => {
+          // Get the updated order of the links
+          const dropCards = document.querySelectorAll(".drop__card");
+          const links = Array.from(dropCards).map((card) => {
+            const id = card.querySelector(".drop__name").id;
+            const order = Array.from(dropItems.children).indexOf(card);
+            return { id, order };
+          });
+    
+          console.log(links);
+    
+          // Update the Firestore database with the new order
+          const batch = writeBatch(getFirestore());
+          links.forEach((link) => {
+            const linkRef = doc(linksCollection, link.id);
+            batch.update(linkRef, { order: link.order });
+          });
+          
+          await batch.commit();
+          console.log("Links updated successfully");
+        },
+      });
+    });
+    
+    
+
+
+// sortAnchor.addEventListener("click", () => {
+//   const dropItems = document.getElementById("drop-items");
+//   const sortable = Sortable.create(dropItems, {
+//     onEnd: function (evt) {
+//       // Get the updated order of the links
+//       const links = [];
+//       const dropCards = document.querySelectorAll(".drop__card");
+//       dropCards.forEach((card) => {
+//         const link = newLinks.find(
+//           (l) => l.id === card.querySelector(".drop__name").id
+//         );
+//         if (link) {
+//           links.push(link);
+          
+//         }
+//       });
+
+//       console.log(links);
+      
+      
+//          // Save the sorted links to Firestore
+     
+//          const firestore = getFirestore(app);
+//          const batch = writeBatch(firestore);
+         
+//          links.forEach((link, index) => {
+//           //  const linkRef = doc(firestore, "links", link.id);
+//            const linkRef = doc(firestore, "users", user.uid, "links", link.id);
+
+//           //  const linkRef = doc(linkcol,link.id);
+         
+//            batch.update(linkRef, { order: index });
+//          });
+         
+//          batch
+//            .commit()
+//            .then(() => {
+//              console.log("Links updated successfully");
+//            })
+//            .catch((error) => {
+//              console.error("Error updating links:", error);
+//            });
+//        }
+    
+//   });
+  
+// });
 
 
 
