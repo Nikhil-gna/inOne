@@ -4,6 +4,7 @@ body{
     text-align: center;
     place-items: center;
     align-items: center;
+    user-select: none;
 }
 .exampleModal{
     display: none;
