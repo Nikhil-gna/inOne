@@ -14,6 +14,19 @@
 	};
 	fullHeight();
 
+	if('ServiceWorker' in navigator) {
+		navigator.serviceWorker.register('/service_worker.js').then(function(registration) {
+			console.log('Registration successful, scope is:', registration.scope);
+		}).catch(function(error) {
+			console.log('Registration failed: ', error);
+		});
+
+		
+	}else{
+		console.log("Service worker not supported")
+	}
+
+
 	$(".toggle-password").click(function() {
 
 	  $(this).toggleClass("fa-eye fa-eye-slash");
