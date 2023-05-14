@@ -1,7 +1,7 @@
 {
     "name": "inone",
      "short_name": "inone",
-        "start_url": "/login",
+        "start_url": "/home",
         "icons": [
             {
                 
@@ -16,6 +16,6 @@
             }
           ],
         "display": "standalone",
-        "background_color": "#efefef",
-        "theme_color": "#efefef"
+        "background_color": "#f8f8fc",
+        "theme_color": "#f8f8fc"
 }

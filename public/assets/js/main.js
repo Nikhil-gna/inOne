@@ -23,6 +23,7 @@
 
 		
 	}else{
+		
 		console.log("Service worker not supported")
 	}
 
