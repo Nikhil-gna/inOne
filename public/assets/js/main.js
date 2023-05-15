@@ -14,18 +14,18 @@
 	};
 	fullHeight();
 
-	if('ServiceWorker' in navigator) {
-		navigator.serviceWorker.register('/service_worker.js').then(function(registration) {
-			console.log('Registration successful, scope is:', registration.scope);
-		}).catch(function(error) {
-			console.log('Registration failed: ', error);
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', function() {
+		  navigator.serviceWorker.register("service_worker.js").then(function(registration) {
+			// Registration was successful
+			console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		  }, function(err) {
+			// Registration failed
+			console.log('ServiceWorker registration failed: ', err);
+		  });
 		});
-
-		
-	}else{
-		
-		console.log("Service worker not supported")
-	}
+	  }
+	  
 
 
 	$(".toggle-password").click(function() {
