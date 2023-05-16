@@ -13,7 +13,6 @@
 
 	};
 	fullHeight();
-
 	if ('serviceWorker' in navigator) {
 		window.addEventListener('load', function() {
 		  navigator.serviceWorker.register("service_worker.js").then(function(registration) {
@@ -25,9 +24,7 @@
 		  });
 		});
 	  }
-	  
-
-
+	
 	$(".toggle-password").click(function() {
 
 	  $(this).toggleClass("fa-eye fa-eye-slash");
