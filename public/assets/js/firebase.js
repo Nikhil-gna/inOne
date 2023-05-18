@@ -414,7 +414,19 @@ onSnapshot(linkcol, (snapshot) => {
   });
 
   console.log(newLinks);
-  const buttonContainer = document.getElementById("drop-items");
+  // const buttonContainer = document.getElementById("drop-items");
+  if(page == "home"){
+    const homecontainer = document.getElementById("linkshome");
+    newLinks.forEach((links) => {
+      const button = document.createElement("a");
+      button.innerText = links.title;
+      button.setAttribute("href", links.url);
+      button.setAttribute("id", links.id);
+      button.setAttribute("class", "links");
+      homecontainer.appendChild(button);
+    });
+  }
+
 
   newLinks.forEach((link) => {
     const dropCard = document.createElement("div");
