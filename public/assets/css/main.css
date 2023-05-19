@@ -181,6 +181,9 @@ a{
     font-size: 17px;
     font-weight: 1000;
     padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     display: block;
     /* font-family: 'Product Sans'; */
     width: 100%;

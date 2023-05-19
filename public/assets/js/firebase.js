@@ -416,7 +416,7 @@ onSnapshot(linkcol, (snapshot) => {
   console.log(newLinks);
   // const buttonContainer = document.getElementById("drop-items");
   if(page == "home"){
-    const homecontainer = document.getElementById("linkshome");
+    const homecontainer = document.getElementById("linksbutton");
     newLinks.forEach((links) => {
       const button = document.createElement("a");
       button.innerText = links.title;
