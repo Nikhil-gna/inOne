@@ -219,6 +219,7 @@ switch (page) {
         if (snapshot.exists()) {
           document.getElementById("dpname").innerHTML = snapshot.val().username;
           document.getElementById("Photo").src = snapshot.val().photoURL;
+          
         } else {
           console.log("No data available");
         }
