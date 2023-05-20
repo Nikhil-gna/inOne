@@ -248,7 +248,11 @@ a{
     border: solid var(--color-main) 2px;
 }
 
-
-
+.containerblack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
 

@@ -213,6 +213,19 @@ switch (page) {
       window.location.assign("/login");
     }
     const logout = document.getElementById("logout");
+    const dbRefe = ref(getDatabase());
+    get(child(dbRefe, "users/" + user.uid + "/details"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          document.getElementById("dpname").innerHTML = snapshot.val().username;
+          document.getElementById("Photo").src = snapshot.val().photoURL;
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
     logout.addEventListener("click", function () {
       // localStorage.removeItem("token");
