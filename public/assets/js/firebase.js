@@ -65,6 +65,8 @@ await setPersistence(auth, browserLocalPersistence);
 
 const page = document.body.id;
 const user = auth.currentUser;
+const colref = collection(db, "users", user.uid, "details");
+const docref = doc(colref, "details");
 switch (page) {
   case "login":
     console.log("login");
@@ -213,21 +215,25 @@ switch (page) {
       window.location.assign("/login");
     }
     const logout = document.getElementById("logout");
-    const dbRefe = ref(getDatabase());
-    get(child(dbRefe, "users/" + user.uid + "/details"))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          document.getElementById("dpname").innerHTML = snapshot.val().username;
-          document.getElementById("Photo").src = snapshot.val().photoURL;
-          document.getElementById("editusername").value = snapshot.val().username;
-          document.getElementById("editEmail").value = snapshot.val().Email;
-
+    getDoc(docref)
+  .then((doc) => {
+    if (doc.exists()) {
+      console.log("Document data:", doc.data());
+      document.getElementById("dpname").innerHTML = doc.data().Name;
+      document.getElementById("Photo").src = doc.data().PhotoURL;
+      document.getElementById("editusername").value = doc.data().Name;
       
-          
-        } else {
-          console.log("No data available");
-        }
-      })
+      let str = doc.data().Email;
+      let res = str.slice(0, -10);
+      document.getElementById("editEmail").value = res;
+      document.getElementById("editbio").value = doc.data().bio; ;
+
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  })
+    
       .catch((error) => {
         console.error(error);
       });
@@ -349,8 +355,7 @@ const links = {
 };
 
 //set data detials
-const colref = collection(db, "users", user.uid, "details");
-const docref = doc(colref, "details");
+
 setDoc(docref, details)
   .then(() => {
     console.log("Document written with ID: ", docRef.id);
