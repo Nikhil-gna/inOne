@@ -219,6 +219,10 @@ switch (page) {
         if (snapshot.exists()) {
           document.getElementById("dpname").innerHTML = snapshot.val().username;
           document.getElementById("Photo").src = snapshot.val().photoURL;
+          document.getElementById("editusername").value = snapshot.val().username;
+          document.getElementById("editEmail").value = snapshot.val().Email;
+
+      
           
         } else {
           console.log("No data available");
@@ -227,6 +231,10 @@ switch (page) {
       .catch((error) => {
         console.error(error);
       });
+      
+      
+      // document.getElementById("editphoto").src = user.photoURL;
+      
 
     logout.addEventListener("click", function () {
       // localStorage.removeItem("token");
