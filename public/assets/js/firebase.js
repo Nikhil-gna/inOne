@@ -113,46 +113,40 @@ switch (page) {
           console.log(error);
         });
     });
+    
     const googlebtn = document.getElementById("googleid");
     googlebtn.addEventListener("click", (e) => {
       e.preventDefault();
       signInWithRedirect(auth, provider);
-
+    
       getRedirectResult(auth)
         .then((result) => {
-          // window.location.assign("/home");
-          // This gives you a Google Access Token. You can use it to access Google APIs.
-          // window.location.assign("/home");
           const credential = GoogleAuthProvider.credentialFromResult(result);
-          // window.location.assign("/home");
-          // console.log(user);
           const token = credential.accessToken;
-
-          // The signed-in user info.
           const user = result.user;
-
-          //redirect to /home
-          // IdP data available using getAdditionalUserInfo(result)
-          // ...
+    
+          console.log(user);
+          // Redirect to "/home" page
+          window.location.assign("/home");
         })
-
         .catch((error) => {
-          // Handle Errors here.
           const errorCode = error.code;
           const errorMessage = error.message;
-          // The email of the user's account used.
           const email = error.customData.email;
-          // The AuthCredential type that was used.
           const credential = GoogleAuthProvider.credentialFromError(error);
           alert(errorMessage);
-          // ...
         });
     });
+    
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        window.location.assign("/home");
+        window.location.href = "/home";
+        // Alternatively, you can use:
+        // window.location.assign("/home");
+        // this.$router.push("/dashboard");
       }
     });
+    
 
     break;
   case "home":
