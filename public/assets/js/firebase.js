@@ -138,12 +138,17 @@ switch (page) {
         });
     });
     
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     window.location.href = "/home";
+    //     // Alternatively, you can use:
+    //     // window.location.assign("/home");
+    //     // this.$router.push("/dashboard");
+    //   }
+    // });
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        window.location.href = "/home";
-        // Alternatively, you can use:
-        // window.location.assign("/home");
-        // this.$router.push("/dashboard");
+        window.location.replace("/home");
       }
     });
     
