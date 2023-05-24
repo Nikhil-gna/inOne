@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   signInWithRedirect,
   getRedirectResult,
+  signInWithPopup,
   onAuthStateChanged,
   browserLocalPersistence,
   browserSessionPersistence,
@@ -116,26 +117,50 @@ switch (page) {
     
     const googlebtn = document.getElementById("googleid");
     googlebtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      signInWithRedirect(auth, provider);
+      
+
+const auth = getAuth();
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    console.log(user);
+    window.location.href = '/home';
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+      // e.preventDefault();
+      // signInWithRedirect(auth, provider);
     
-      getRedirectResult(auth)
-        .then((result) => {
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-          const user = result.user;
+      // getRedirectResult(auth)
+      //   .then((result) => {
+      //     const credential = GoogleAuthProvider.credentialFromResult(result);
+      //     const token = credential.accessToken;
+      //     const user = result.user;
     
-          console.log(user);
-          // Redirect to "/home" page
-          window.location.assign("/home");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.customData.email;
-          const credential = GoogleAuthProvider.credentialFromError(error);
-          alert(errorMessage);
-        });
+      //     console.log(user);
+      //     // Redirect to "/home" page
+      //     window.location.assign("/home");
+      //   })
+      //   .catch((error) => {
+      //     const errorCode = error.code;
+      //     const errorMessage = error.message;
+      //     const email = error.customData.email;
+      //     const credential = GoogleAuthProvider.credentialFromError(error);
+      //     alert(errorMessage);
+      //   });
     });
     
     // onAuthStateChanged(auth, (user) => {
@@ -146,11 +171,11 @@ switch (page) {
     //     // this.$router.push("/dashboard");
     //   }
     // });
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.replace("/home");
-      }
-    });
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     window.location.replace("/home");
+    //   }
+    // });
     
 
     break;
