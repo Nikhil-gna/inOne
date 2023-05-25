@@ -5,7 +5,6 @@ import {
   updateProfile,
   setPersistence,
   GoogleAuthProvider,
-  signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
   signInWithPopup,
@@ -40,6 +39,9 @@ import {
   orderBy,
   writeBatch,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
+
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
@@ -112,31 +114,9 @@ switch (page) {
           console.log(error);
         });
     });
-
+    
     const googlebtn = document.getElementById("googleid");
     googlebtn.addEventListener("click", (e) => {
-<<<<<<< HEAD
-      e.preventDefault();
-      signInWithRedirect(auth, provider);
-
-      getRedirectResult(auth)
-        .then((result) => {
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-          const user = result.user;
-
-          console.log(user);
-          // Redirect to "/home" page
-          window.location.assign("/home");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.customData.email;
-          const credential = GoogleAuthProvider.credentialFromError(error);
-          alert(errorMessage);
-        });
-=======
       
 
 const auth = getAuth();
@@ -181,9 +161,8 @@ signInWithPopup(auth, provider)
       //     const credential = GoogleAuthProvider.credentialFromError(error);
       //     alert(errorMessage);
       //   });
->>>>>>> 03bbd5336260ffc64f4316525ab0bfe84a0cbd07
     });
-
+    
     // onAuthStateChanged(auth, (user) => {
     //   if (user) {
     //     window.location.href = "/home";
@@ -192,20 +171,12 @@ signInWithPopup(auth, provider)
     //     // this.$router.push("/dashboard");
     //   }
     // });
-<<<<<<< HEAD
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.replace("/home");
-      }
-    });
-=======
     // onAuthStateChanged(auth, (user) => {
     //   if (user) {
     //     window.location.replace("/home");
     //   }
     // });
     
->>>>>>> 03bbd5336260ffc64f4316525ab0bfe84a0cbd07
 
     break;
   case "home":
@@ -266,41 +237,19 @@ signInWithPopup(auth, provider)
       window.location.assign("/login");
     }
     const logout = document.getElementById("logout");
-    // const dbRefe = ref(getDatabase());
-    // get(child(dbRefe, "users/" + user.uid + "/details"))
-    //   .then((snapshot) => {
-    //     if (snapshot.exists()) {
-    //       document.getElementById("dpname").innerHTML = snapshot.val().username;
-    //       document.getElementById("Photo").src = snapshot.val().photoURL;
-    //       console.log(snapshot.val());
-    //     } else {
-    //       console.log("No data available");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-    const colref = collection(db, "users", user.uid, "details");
-    const docref = doc(colref, "details");
-    getDoc(docref)
-      .then((doc) => {
-        if (doc.exists()) {
-          console.log("Document data:", doc.data());
-                document.getElementById("dpname").innerHTML = doc.data().Name;
-                document.getElementById("Photo").src = doc.data().PhotoURL;
-                document.getElementById("editusername").value = doc.data().Name;
-                var email = doc.data().Email;
-                var sliceemail = email.slice(0, -10);
-                document.getElementById("editEmail").value = sliceemail;
-                document.getElementById("editbio").innerHTML = doc.data().bio;
-
+    const dbRefe = ref(getDatabase());
+    get(child(dbRefe, "users/" + user.uid + "/details"))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          document.getElementById("dpname").innerHTML = snapshot.val().username;
+          document.getElementById("Photo").src = snapshot.val().photoURL;
+          
         } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
+          console.log("No data available");
         }
       })
       .catch((error) => {
-        console.log("Error getting document:", error.message);
+        console.error(error);
       });
 
     logout.addEventListener("click", function () {
@@ -504,7 +453,7 @@ onSnapshot(linkcol, (snapshot) => {
 
   console.log(newLinks);
   // const buttonContainer = document.getElementById("drop-items");
-  if (page == "home") {
+  if(page == "home"){
     const homecontainer = document.getElementById("linksbutton");
     newLinks.forEach((links) => {
       const button = document.createElement("a");
@@ -515,6 +464,7 @@ onSnapshot(linkcol, (snapshot) => {
       homecontainer.appendChild(button);
     });
   }
+
 
   newLinks.forEach((link) => {
     const dropCard = document.createElement("div");
@@ -553,49 +503,56 @@ onSnapshot(linkcol, (snapshot) => {
       }
     });
 
-    sortAnchor.addEventListener("click", () => {
-      const dropItems = document.getElementById("drop-items");
-      const sortable = Sortable.create(dropItems, {
-        onEnd: function (evt) {
-          // Get the updated order of the links
-          const links = [];
-          const dropCards = document.querySelectorAll(".drop__card");
-          dropCards.forEach((card) => {
-            const link = newLinks.find(
-              (l) => l.id === card.querySelector(".drop__name").id
-            );
-            if (link) {
-              links.push(link);
-            }
-          });
-
-          console.log(links);
-
-          // Save the sorted links to Firestore
-
-          const firestore = getFirestore(app);
-          const batch = writeBatch(firestore);
-
-          links.forEach((link, index) => {
-            //  const linkRef = doc(firestore, "links", link.id);
-            const linkRef = doc(firestore, "users", user.uid, "links", link.id);
-
-            //  const linkRef = doc(linkcol,link.id);
-
-            batch.update(linkRef, { order: index });
-          });
-
-          batch
-            .commit()
-            .then(() => {
-              console.log("Links updated successfully");
-            })
-            .catch((error) => {
-              console.error("Error updating links:", error);
-            });
-        },
+sortAnchor.addEventListener("click", () => {
+  const dropItems = document.getElementById("drop-items");
+  const sortable = Sortable.create(dropItems, {
+    onEnd: function (evt) {
+      // Get the updated order of the links
+      const links = [];
+      const dropCards = document.querySelectorAll(".drop__card");
+      dropCards.forEach((card) => {
+        const link = newLinks.find(
+          (l) => l.id === card.querySelector(".drop__name").id
+        );
+        if (link) {
+          links.push(link);
+          
+        }
       });
-    });
+
+      console.log(links);
+      
+      
+         // Save the sorted links to Firestore
+     
+         const firestore = getFirestore(app);
+         const batch = writeBatch(firestore);
+         
+         links.forEach((link, index) => {
+          //  const linkRef = doc(firestore, "links", link.id);
+           const linkRef = doc(firestore, "users", user.uid, "links", link.id);
+
+          //  const linkRef = doc(linkcol,link.id);
+         
+           batch.update(linkRef, { order: index });
+         });
+         
+         batch
+           .commit()
+           .then(() => {
+             console.log("Links updated successfully");
+           })
+           .catch((error) => {
+             console.error("Error updating links:", error);
+           });
+       }
+    
+  });
+  
+});
+
+
+
 
     iconsdiv.appendChild(sortAnchor);
     iconsdiv.appendChild(deleteAnchor);
@@ -687,6 +644,7 @@ const linkss = [
 ];
 
 const dropItems = document.getElementById("drop-items");
+
 
 const docRef = doc(db, "users", user.uid);
 // get data
