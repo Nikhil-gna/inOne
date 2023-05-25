@@ -237,19 +237,27 @@ signInWithPopup(auth, provider)
       window.location.assign("/login");
     }
     const logout = document.getElementById("logout");
-    const dbRefe = ref(getDatabase());
-    get(child(dbRefe, "users/" + user.uid + "/details"))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          document.getElementById("dpname").innerHTML = snapshot.val().username;
-          document.getElementById("Photo").src = snapshot.val().photoURL;
-          
+    const colref = collection(db, "users", user.uid, "details");
+    const docref = doc(colref, "details");
+    getDoc(docref)
+      .then((doc) => {
+        if (doc.exists()) {
+          console.log("Document data:", doc.data());
+                document.getElementById("dpname").innerHTML = doc.data().Name;
+                document.getElementById("Photo").src = doc.data().PhotoURL;
+                document.getElementById("editusername").value = doc.data().Name;
+                var email = doc.data().Email;
+                var sliceemail = email.slice(0, -10);
+                document.getElementById("editEmail").value = sliceemail;
+                document.getElementById("editbio").innerHTML = doc.data().bio;
+
         } else {
-          console.log("No data available");
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log("Error getting document:", error.message);
       });
 
     logout.addEventListener("click", function () {
