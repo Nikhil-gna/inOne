@@ -237,6 +237,7 @@ signInWithPopup(auth, provider)
       window.location.assign("/login");
     }
     const logout = document.getElementById("logout");
+    //getting data from firestore and displaying on edit button
     const colref = collection(db, "users", user.uid, "details");
     const docref = doc(colref, "details");
     getDoc(docref)
@@ -259,6 +260,24 @@ signInWithPopup(auth, provider)
       .catch((error) => {
         console.log("Error getting document:", error.message);
       });
+      //updating form
+      const updateForm = document.querySelector(".update");
+      updateForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        updateDoc(docref, {
+        
+          Name: updateForm.usernameupdate.value,
+          bio: updateForm.bioupdate.value,
+          Email: updateForm.editEmail.value,
+
+        }).then(() => {
+          // updateForm.Name.value = "";
+        
+        });
+        
+      });
+      
 
     logout.addEventListener("click", function () {
       // localStorage.removeItem("token");
@@ -360,12 +379,29 @@ $(".addData").on("click", (e) => {
   // console.log(links);
 });
 
+
+// const updateForm = document.querySelector(".update");
+//       updateForm.addEventListener("submit", (e) => {
+//         e.preventDefault();
+//          var  Name=updateForm.usernameupdate.value;
+//          var   biou= updateForm.bioupdate.value;
+//          var  Email=updateForm.editEmail.value;
+
+//          const  details = {
+//           Name: Name,
+//           Email: Email,
+//           bio: biou,
+//         };
+
+//       });
+
+
 const details = {
   userID: user.uid,
   Name: user.displayName,
   Email: user.email,
   PhotoURL: user.photoURL,
-  bio: "Hi,an app you can share all socials links in one place",
+  bio: "",
 };
 const links = {
   title: "title",
