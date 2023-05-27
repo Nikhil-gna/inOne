@@ -275,6 +275,16 @@ signInWithPopup(auth, provider)
           // updateForm.Name.value = "";
         
         });
+        updateProfile(auth.currentUser, {
+          displayName: updateForm.usernameupdate.value, 
+          bio: updateForm.bioupdate.value,
+        }).then(() => {
+          console.log("Profile updated!");
+        }).catch((error) => {
+          // An error occurred
+          // ...
+          console.log(error);
+        });
         
       });
       
@@ -380,20 +390,6 @@ $(".addData").on("click", (e) => {
 });
 
 
-// const updateForm = document.querySelector(".update");
-//       updateForm.addEventListener("submit", (e) => {
-//         e.preventDefault();
-//          var  Name=updateForm.usernameupdate.value;
-//          var   biou= updateForm.bioupdate.value;
-//          var  Email=updateForm.editEmail.value;
-
-//          const  details = {
-//           Name: Name,
-//           Email: Email,
-//           bio: biou,
-//         };
-
-//       });
 
 
 const details = {
