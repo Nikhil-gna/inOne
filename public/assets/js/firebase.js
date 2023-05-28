@@ -66,6 +66,7 @@ await setPersistence(auth, browserLocalPersistence);
 
 const page = document.body.id;
 const user = auth.currentUser;
+
 switch (page) {
   case "login":
     console.log("login");
@@ -264,20 +265,10 @@ signInWithPopup(auth, provider)
       const updateForm = document.querySelector(".update");
       updateForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        
-        updateDoc(docref, {
-        
-          Name: updateForm.usernameupdate.value,
-          bio: updateForm.bioupdate.value,
-          Email: updateForm.editEmail.value,
-
-        }).then(() => {
-          // updateForm.Name.value = "";
-        
-        });
         updateProfile(auth.currentUser, {
           displayName: updateForm.usernameupdate.value, 
-          bio: updateForm.bioupdate.value,
+          Email: updateForm.editEmail.value,
+          
         }).then(() => {
           console.log("Profile updated!");
         }).catch((error) => {
@@ -397,7 +388,7 @@ const details = {
   Name: user.displayName,
   Email: user.email,
   PhotoURL: user.photoURL,
-  bio: "",
+  bio: "Add your bio",
 };
 const links = {
   title: "title",
