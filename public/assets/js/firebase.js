@@ -345,20 +345,24 @@ if (user !== null) {
   });
 }
 
-const dbRef = ref(getDatabase());
-get(child(dbRef, "users/" + user.uid + "/details"))
-  .then((snapshot) => {
-    if (snapshot.exists()) {
-      console.log(snapshot.val());
-      document.getElementById("dpName").innerHTML = snapshot.val().username;
-      document.getElementById("profilepic").src = snapshot.val().photoURL;
-    } else {
-      console.log("No data available");
-    }
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+const colreff = collection(db, "users", user.uid, "details");
+const docreff = doc(colreff, "details");
+getDoc(docreff)
+.then((doc) => {
+  if (doc.exists()) {
+    console.log("Document data:", doc.data());
+    document.getElementById("dpName").innerHTML = doc.data().Name;
+    document.getElementById("profilepic").src = doc.data().PhotoURL;
+ 
+
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+})
+.catch((error) => {
+  console.log("Error getting document:", error.message);
+});
 
 const link = document.getElementById("url-input");
 const title = document.getElementById("title-input");
