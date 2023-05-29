@@ -182,26 +182,30 @@ signInWithPopup(auth, provider)
     break;
   case "home":
     console.log("home");
+    const colreff = collection(db, "users", user.uid, "details");
+    const docreff = doc(colreff, "details");
+    getDoc(docreff)
+      .then((doc) => {
+        if (doc.exists()) {
+          console.log("Document data:", doc.data());
+          document.getElementById("name").innerHTML =doc.data().Name ;
+          document.getElementById("Photo").src =doc.data().PhotoURL ;
+
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error.message);
+      });
 
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.assign("/login");
       }
     });
-    const dbRef = ref(getDatabase());
-    get(child(dbRef, "users/" + user.uid + "/details"))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          document.getElementById("name").innerHTML = snapshot.val().username;
-          document.getElementById("Photo").src = snapshot.val().photoURL;
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
+   
     break;
   case "link":
     console.log("link");

@@ -58,48 +58,4 @@
 
 
 
-<script>
-   
-// retrieve items from local storage or create an empty array
-const items = JSON.parse(localStorage.getItem("items")) || [];
-
-// add event listener to the form submit button
-const form = document.querySelector("form");
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  // get the URL and title inputs
-  const urlInput = document.getElementById("url-input");
-  const titleInput = document.getElementById("title-input");
-
-  // add the new item to the items array
-  items.push({ url: urlInput.value, title: titleInput.value });
-
-  // save the updated items array to local storage
-  localStorage.setItem("items", JSON.stringify(items));
-
-  // clear the input fields
-  urlInput.value = "";
-  titleInput.value = "";
-
-  // render the updated items
-  // renderItems();
-  const container = document.getElementById("linksbutton");
-  items.forEach((link) => {
-  const a = document.createElement("a");
-  a.href = link.url;
-  a.innerText = link.title;
-  // $('#linksbutton a').addClass('links');
-  container.appendChild(a);
-});
-
-});   
-
-
-
-
-
-
-</script>
-
 <%- include('partials/footer') %>
