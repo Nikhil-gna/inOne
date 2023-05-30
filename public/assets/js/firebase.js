@@ -16,11 +16,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
 import {
   getDatabase,
-  set,
-  get,
-  ref,
-  child,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-storage.js";
+
+
 import {
   getFirestore,
   collection,
@@ -57,6 +56,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 const provider = new GoogleAuthProvider(app);
 // const database = getDatabase(app);
 const auth = getAuth(app);
@@ -267,21 +267,41 @@ signInWithPopup(auth, provider)
       });
       //updating form
       const updateForm = document.querySelector(".update");
-      updateForm.addEventListener("submit", (e) => {
+      
+      updateForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        updateProfile(auth.currentUser, {
-          displayName: updateForm.usernameupdate.value, 
-          Email: updateForm.editEmail.value,
-          
-        }).then(() => {
-          console.log("Profile updated!");
-        }).catch((error) => {
-          // An error occurred
-          // ...
-          console.log(error);
-        });
-        
+      
+        const username = updateForm.usernameupdate.value;
+        const email = updateForm.editEmail.value;
+        const photoFile = updateForm.editphoto.files[0]; // Get the selected file from the input
+      
+        try {
+          // Upload the photo to Firebase Storage
+          const storageRef = ref(storage, `profile_pictures/${photoFile.name}`);
+          await uploadBytes(storageRef, photoFile);
+      
+          // Get the download URL of the uploaded photo
+          const photoURL = await getDownloadURL(storageRef);
+      
+          // Update the user's profile in Firebase Auth
+          await updateProfile(auth.currentUser, {
+            displayName: username,
+            email: email,
+            photoURL: photoURL,
+          });
+      
+          // Update the user's photoURL in Firestore
+          const userDocRef = doc(db, "users", auth.currentUser.uid);
+          await updateDoc(userDocRef, {
+            photoURL: photoURL,
+          });
+      
+          console.log("Profile and photoURL updated!");
+        } catch (error) {
+          console.log("Error updating profile and photoURL:", error);
+        }
       });
+      
       
 
     logout.addEventListener("click", function () {
@@ -329,21 +349,7 @@ signInWithPopup(auth, provider)
 
 // const user = auth.currentUser;
 
-if (user !== null) {
-  user.providerData.forEach((profile) => {
-    console.log("Sign-in provider: " + profile.providerId);
-    console.log("  Provider-specific UID: " + profile.uid);
-    console.log("  Name: " + profile.displayName);
-    console.log("  Email: " + profile.email);
-    console.log("  Photo URL: " + profile.photoURL);
 
-    set(ref(database, "users/" + user.uid + "/details"), {
-      username: profile.displayName,
-      email: profile.email,
-      photoURL: profile.photoURL,
-    });
-  });
-}
 
 const colreff = collection(db, "users", user.uid, "details");
 const docreff = doc(colreff, "details");
@@ -364,12 +370,7 @@ getDoc(docreff)
   console.log("Error getting document:", error.message);
 });
 
-const link = document.getElementById("url-input");
-const title = document.getElementById("title-input");
-set(ref(database, "users/" + user.uid + "/links"), {
-  title: "title",
-  url: "link",
-});
+
 
 //###################################################### firestore ###############################################
 
