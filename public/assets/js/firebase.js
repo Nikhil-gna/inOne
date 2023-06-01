@@ -18,8 +18,6 @@ import {
   getDatabase,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-storage.js";
-
-
 import {
   getFirestore,
   collection,
@@ -38,10 +36,6 @@ import {
   orderBy,
   writeBatch,
 } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
-
-
-
-
 const firebaseConfig = {
   apiKey: "AIzaSyBIKqPty9zxa8-oPJfVFDgQBaUdN_donPM",
   authDomain: "inone-f777c.firebaseapp.com",
@@ -97,15 +91,7 @@ switch (page) {
               }),
             });
           });
-          //   .then(() => {
-          //     return signOut(auth).then(() => {
-          //       // Sign-out successful.
-          // 	  alert("Sign-out successful.");
-          //     })
-          // })
-          // .then(() => {
-          //   window.location.assign("/home");
-          // })
+       
         })
         .catch((error) => {
           const errorCode = error.code;
