@@ -128,41 +128,7 @@ signInWithPopup(auth, provider)
     const credential = GoogleAuthProvider.credentialFromError(error);
     // ...
   });
-      // e.preventDefault();
-      // signInWithRedirect(auth, provider);
-    
-      // getRedirectResult(auth)
-      //   .then((result) => {
-      //     const credential = GoogleAuthProvider.credentialFromResult(result);
-      //     const token = credential.accessToken;
-      //     const user = result.user;
-    
-      //     console.log(user);
-      //     // Redirect to "/home" page
-      //     window.location.assign("/home");
-      //   })
-      //   .catch((error) => {
-      //     const errorCode = error.code;
-      //     const errorMessage = error.message;
-      //     const email = error.customData.email;
-      //     const credential = GoogleAuthProvider.credentialFromError(error);
-      //     alert(errorMessage);
-      //   });
     });
-    
-    // onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     window.location.href = "/home";
-    //     // Alternatively, you can use:
-    //     // window.location.assign("/home");
-    //     // this.$router.push("/dashboard");
-    //   }
-    // });
-    // onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     window.location.replace("/home");
-    //   }
-    // });
     
 
     break;
@@ -312,28 +278,6 @@ signInWithPopup(auth, provider)
     console.log("default");
     break;
 }
-
-// onAuthStateChanged(auth, (user) => {
-//   if (!user) {
-//    } else {
-//    }
-// });
-
-// updateProfile(auth.currentUser, {
-//   displayName: "hash InOne",
-// })
-//   .then(() => {
-//     // Profile updated!
-//     console.log("Profile updated!");
-//     // ...
-//   })
-//   .catch((error) => {
-//     // An error occurred
-//     alert(error);
-//     // ...
-//   });
-
-// const user = auth.currentUser;
 
 
 
