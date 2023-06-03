@@ -111,13 +111,24 @@ img {
   align-items: center;
 }
 
+.profile-picture-container {
+  width: 45px; /* Adjust the size as needed */
+  height: 45px;
+  border-radius: 100%; /* Make it a circle */
+  margin-right: 15px;
+  overflow: hidden; /* Hide any overflowing content */
+}
 .nav__img {
   width: 40px;
   border-radius: 50%;
   margin-right: 15px;
   padding-bottom: 2px;
   align-items: first baseline;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image fills the container */
 }
+
 
 .nav__logo {
   color: var(--title-color);
