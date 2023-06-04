@@ -219,7 +219,7 @@ signInWithPopup(auth, provider)
       });
       //updating form
       const updateForm = document.querySelector(".update");
-      
+
       updateForm.addEventListener("submit", async (e) => {
         e.preventDefault();
       
@@ -248,13 +248,15 @@ signInWithPopup(auth, provider)
             photoURL: photoURL,
           });
       
-          alert("Profile and photoURL updated!")
+          alert("Profile and photoURL updated!");
           console.log("Profile and photoURL updated!");
         } catch (error) {
           console.log("Error updating profile and photoURL:", error);
         }
       });
       
+
+
       
 
     logout.addEventListener("click", function () {
