@@ -256,9 +256,6 @@ signInWithPopup(auth, provider)
       });
       
 
-
-      
-
     logout.addEventListener("click", function () {
       // localStorage.removeItem("token");
       if (confirm("Are you sure you want to logout?")) {
@@ -282,8 +279,6 @@ signInWithPopup(auth, provider)
     break;
 }
 
-
-
 const colreff = collection(db, "users", user.uid, "details");
 const docreff = doc(colreff, "details");
 getDoc(docreff)
@@ -292,8 +287,6 @@ getDoc(docreff)
     console.log("Document data:", doc.data());
     document.getElementById("dpName").innerHTML = doc.data().Name;
     document.getElementById("profilepic").src = doc.data().PhotoURL;
- 
-
   } else {
     // doc.data() will be undefined in this case
     console.log("No such document!");
