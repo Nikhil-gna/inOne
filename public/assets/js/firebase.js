@@ -278,7 +278,6 @@ signInWithPopup(auth, provider)
     console.log("default");
     break;
 }
-
 const colreff = collection(db, "users", user.uid, "details");
 const docreff = doc(colreff, "details");
 getDoc(docreff)
@@ -516,10 +515,6 @@ sortAnchor.addEventListener("click", () => {
   });
   
 });
-
-
-
-
     iconsdiv.appendChild(sortAnchor);
     iconsdiv.appendChild(deleteAnchor);
 
@@ -584,24 +579,6 @@ sortAnchor.addEventListener("click", () => {
 //   }
 //   displayLinks();
 // })();
-
-// // Save the links array to Firestore
-// async function saveLinks() {
-//   await setDoc(doc(db, 'links', 'links'), { links: newLink });
-//   console.log('Links saved successfully!');
-// }
-
-// // Display the links in the container
-// function displayLinks() {
-//   const linksHTML = newLink.map(link => `
-//     <a href="${link.url}" data-id="${link.id}">
-//       <div class="title">${link.title}</div>
-//     </a>
-//   `).join('');
-
-//   console.log(newLink);
-//   sortableContainer.innerHTML = linksHTML;
-// }
 
 const linkss = [
   { url: "https://www.discord.com/", title: "Discord" },
