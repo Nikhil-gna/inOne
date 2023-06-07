@@ -295,8 +295,6 @@ getDoc(docreff)
   console.log("Error getting document:", error.message);
 });
 
-
-
 //###################################################### firestore ###############################################
 
 //database init
@@ -373,32 +371,7 @@ getDoc(docref)
     console.log("Error getting document:", error.message);
   });
 
-////////////////////////////////////////////get data from firestore realtime collection////////////////////////////////////////
-// onSnapshot(linkcol, (snapshot) => {
-//   let link = [];
 
-//   snapshot.docs.forEach((doc) => {
-//     link.push({ ...doc.data(), id: doc.id });
-//     console.log(link);
-//   });
-
-//     const buttonContainer = document.getElementById("button-container");
-
-//      link.forEach((links) => {
-//       const button = document.createElement('a');
-//       button.innerText = links.title;
-//       button.setAttribute('href', links.url);
-//       button.setAttribute('id', links.id);
-//       button.setAttribute('class', 'links');
-//       buttonContainer.appendChild(button);
-//      });
-//      bottomsavebtn.addEventListener('click', () => {
-//       // const buttonToUpdate = document.getElementById(`button-${links.id}`);
-//       // buttonToUpdate.innerText = links.title;
-//       // buttonToUpdate.setAttribute('href', links.url);
-//       buttonContainer.appendChild(button);
-//     });
-//   });
 
 // Define an array to store the IDs of previously added links
 let previousLinkIds = [];
