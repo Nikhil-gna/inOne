@@ -360,7 +360,6 @@ const linkdoc = doc(linkcol);
 // });
 
 //get data from firestore realtime collection
-
 getDoc(docref)
   .then((doc) => {
     if (doc.exists()) {
