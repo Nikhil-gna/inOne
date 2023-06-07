@@ -545,40 +545,7 @@ sortAnchor.addEventListener("click", () => {
 //   }
 // });
 
-// // Load links from Firestore or use the default array
-// let newLink;
-// (async function() {
-//   const docRef = doc(db, 'links', 'links');
-//   const docSnap = await getDoc(docRef);
-//   if (docSnap.exists()) {
-//     newLink = docSnap.data().links;
-//   } else {
-//     newLink = [
-//       {
-//         "title": "instagram",
-//         "url": "https://www.instagram.com/",
-//         "id": "GQnaQ7ZUSt6tAFUEQaui"
-//       },
-//       {
-//         "title": "discord",
-//         "url": "https://www.discord.com/",
-//         "id": "JBsQuuRAU0vTg2p6KctB"
-//       },
-//       {
-//         "url": "https://www.apple.com/",
-//         "title": "apple",
-//         "id": "Oi9fc4ZvbEj1LI3tjJXC"
-//       },
-//       {
-//         "title": "youtube",
-//         "url": "https://www.youtube.com/",
-//         "id": "o5U133VALKeuCjslqGY6"
-//       }
-//     ];
-//     await setDoc(doc(db, 'links', 'links'), { links: newLink });
-//   }
-//   displayLinks();
-// })();
+
 
 const linkss = [
   { url: "https://www.discord.com/", title: "Discord" },
