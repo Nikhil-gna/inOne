@@ -203,7 +203,8 @@ signInWithPopup(auth, provider)
           console.log("Document data:", doc.data());
                 document.getElementById("dpname").innerHTML = doc.data().Name;
                 document.getElementById("Photo").src = doc.data().PhotoURL;
-                document.getElementById("editusername").value = doc.data().Name;
+                document.getElementById("editname").value = doc.data().Name;
+                document.getElementById("editusername").value = doc.data().userID;
                 var email = doc.data().Email;
                 var sliceemail = email.slice(0, -10);
                 document.getElementById("editEmail").value = sliceemail;
@@ -219,13 +220,38 @@ signInWithPopup(auth, provider)
       });
       //updating form
       const updateForm = document.querySelector(".update");
+      updateForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        updateDoc(docref, {
+        
+          Name: updateForm.editname.value,
+          bio: updateForm.bioupdate.value,
+          Email: updateForm.editEmail.value,
+
+        }).then(() => {
+          // updateForm.Name.value = "";
+        
+        });
+        updateProfile(auth.currentUser, {
+          displayName: updateForm.editname.value, 
+          bio: updateForm.bioupdate.value,
+          // 0. add all details from 
+          // 1.user name form uid
+        }).then(() => {
+          console.log("Profile updated!");
+        }).catch((error) => {
+          // An error occurred
+          // ...
+          console.log(error);
+        });
+
+      });
 
       updateForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-      
-        const username = updateForm.usernameupdate.value;
-        const email = updateForm.editEmail.value;
-        const photoFile = updateForm.editphoto.files[0]; // Get the selected file from the input
+    
+        const photoFile = updateForm.editphoto.files[0]; 
       
         try {
           // Upload the photo to Firebase Storage
@@ -237,8 +263,6 @@ signInWithPopup(auth, provider)
       
           // Update the user's profile in Firebase Auth
           await updateProfile(auth.currentUser, {
-            displayName: username,
-            email: email,
             photoURL: photoURL,
           });
       
@@ -246,9 +270,9 @@ signInWithPopup(auth, provider)
           const userDocRef = doc(db, "users", auth.currentUser.uid);
           await updateDoc(userDocRef, {
             photoURL: photoURL,
+            
           });
       
-          alert("Profile and photoURL updated!");
           console.log("Profile and photoURL updated!");
         } catch (error) {
           console.log("Error updating profile and photoURL:", error);
