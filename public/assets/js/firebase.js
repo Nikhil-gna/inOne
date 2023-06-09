@@ -228,6 +228,7 @@ signInWithPopup(auth, provider)
           Name: updateForm.editname.value,
           bio: updateForm.bioupdate.value,
           Email: updateForm.editEmail.value,
+          userID:updateForm.editusername.value
 
         }).then(() => {
           // updateForm.Name.value = "";
@@ -236,6 +237,7 @@ signInWithPopup(auth, provider)
         updateProfile(auth.currentUser, {
           displayName: updateForm.editname.value, 
           bio: updateForm.bioupdate.value,
+          userID:updateForm.editusername.value
           // 0. add all details from 
           // 1.user name form uid
         }).then(() => {
