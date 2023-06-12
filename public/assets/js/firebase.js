@@ -224,7 +224,6 @@ signInWithPopup(auth, provider)
         e.preventDefault();
         
         updateDoc(docref, {
-        
           Name: updateForm.editname.value,
           bio: updateForm.bioupdate.value,
           Email: updateForm.editEmail.value,
