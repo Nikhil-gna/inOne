@@ -232,7 +232,7 @@ signInWithPopup(auth, provider)
 
         }).then(() => {
           // updateForm.Name.value = "";
-        
+            
         });
         updateProfile(auth.currentUser, {
           displayName: updateForm.editname.value, 
@@ -242,6 +242,7 @@ signInWithPopup(auth, provider)
           // 1.user name form uid
         }).then(() => {
           console.log("Profile updated!");
+         
         }).catch((error) => {
           // An error occurred
           // ...
